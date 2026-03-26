@@ -56,12 +56,12 @@ Phase 1 goal: **functional, authenticated skeleton — nothing clinical yet.**
 Exit criteria: a logged-in user sees a role-appropriate dashboard shell; role guards block unauthorized routes.
 
 ### Supabase
-- [ ] Create Supabase project for Dasmariñas CHO II.
-- [ ] Enable PostGIS extension.
-- [ ] Apply initial schema migrations: `barangays`, `health_stations`, `user_profiles`.
-- [ ] Configure RLS policies per role (`bhw`, `midwife_rhm`, `nurse_phn`, `dso`, `phis_coordinator`, `city_health_officer`, `system_admin`).
-- [ ] Set up Supabase Auth with JWT role claim injection.
-- [ ] Create `reports` Storage bucket with RLS for M1/M2 export files.
+- [x] Create Supabase project for Dasmariñas CHO II.
+- [x] Enable PostGIS extension.
+- [x] Apply initial schema migrations: `barangays`, `health_stations`, `user_profiles`.
+- [x] Configure RLS policies per role (`bhw`, `midwife_rhm`, `nurse_phn`, `dso`, `phis_coordinator`, `city_health_officer`, `system_admin`).
+- [x] Set up Supabase Auth with JWT role claim injection.
+- [x] Create `reports` Storage bucket with RLS for M1/M2 export files.
 
 ### Backend
 - [ ] Create `backend/app/` package structure (api, core, models, schemas, services).
@@ -79,8 +79,8 @@ Exit criteria: a logged-in user sees a role-appropriate dashboard shell; role gu
 - [ ] Build System Admin panel: create/deactivate users, assign roles and BHS.
 
 ### CI/CD
-- [ ] Connect Vercel to the frontend repo; set `VITE_SUPABASE_URL` and `VITE_SUPABASE_ANON_KEY`.
-- [ ] Set up GitHub Actions: `tsc --noEmit` + Vitest on frontend PRs; `pytest` on backend PRs.
+- [x] Connect Vercel to the frontend repo; set `VITE_SUPABASE_URL` and `VITE_SUPABASE_ANON_KEY`.
+- [x] Set up GitHub Actions: `tsc --noEmit` + Vitest on frontend PRs; `pytest` on backend PRs.
 
 ---
 
