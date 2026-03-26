@@ -1,30 +1,56 @@
-name: Playwright Tests
+name: Playwright E2E Tests
+
 on:
   push:
-    branches: [ main, master ]
+    branches: [main]
   pull_request:
-    branches: [ main, master ]
+    branches: [main]
+
 jobs:
   test:
+    name: E2E Tests
     timeout-minutes: 60
     runs-on: ubuntu-latest
+
     defaults:
       run:
         working-directory: ./e2e
+
     steps:
-    - uses: actions/checkout@v4
-    - uses: actions/setup-node@v4
-      with:
-        node-version: lts/*
-    - name: Install dependencies
-      run: npm ci
-    - name: Install Playwright Browsers
-      run: npx playwright install --with-deps
-    - name: Run Playwright tests
-      run: npx playwright test
-    - uses: actions/upload-artifact@v4
-      if: ${{ !cancelled() }}
-      with:
-        name: playwright-report
-        path: e2e/playwright-report/
-        retention-days: 30
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: lts/*
+          cache: npm
+          cache-dependency-path: e2e/package-lock.json
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Install Playwright Browsers
+        run: npx playwright install --with-deps chromium
+
+      # On PRs: install frontend deps and run against the Vite dev server
+      # On main push: Vercel auto-deploys; tests run against the production URL
+      - name: Install frontend dependencies (PR only)
+        if: github.event_name == 'pull_request'
+        working-directory: ./frontend
+        run: npm ci
+
+      - name: Run Playwright tests (PR — local dev server)
+        if: github.event_name == 'pull_request'
+        run: npx playwright test --project=chromium
+
+      - name: Run Playwright tests (main — Vercel production)
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        run: npx playwright test --project=chromium
+        env:
+          PLAYWRIGHT_BASE_URL: https://project-link-cho2.vercel.app
+
+      - uses: actions/upload-artifact@v4
+        if: ${{ !cancelled() }}
+        with:
+          name: playwright-report
+          path: e2e/playwright-report/
+          retention-days: 30

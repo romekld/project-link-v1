@@ -1,0 +1,44 @@
+name: Backend CI
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'backend/**'
+      - '.github/workflows/backend-ci.yml'
+  pull_request:
+    branches: [main]
+    paths:
+      - 'backend/**'
+      - '.github/workflows/backend-ci.yml'
+
+jobs:
+  test:
+    name: Pytest
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./backend
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v4
+        with:
+          version: latest
+
+      - name: Install dependencies
+        run: uv sync --all-groups
+
+      - name: Run tests
+        run: uv run pytest --tb=short
+        env:
+          # Tests use mocked DB — no live Supabase connection needed
+          SUPABASE_URL: http://localhost:54321
+          SUPABASE_ANON_KEY: test-anon-key
+          DATABASE_URL: sqlite+aiosqlite:///:memory:

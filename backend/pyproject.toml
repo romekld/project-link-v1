@@ -1,0 +1,27 @@
+[project]
+name = "project-link-backend"
+version = "0.1.0"
+requires-python = ">=3.12"
+dependencies = [
+    "fastapi>=0.115",
+    "uvicorn[standard]>=0.34",
+    "pydantic-settings>=2.7",
+    "pydantic[email]>=2.11",
+    "sqlalchemy[asyncio]>=2.0",
+    "asyncpg>=0.30",
+    "supabase>=2.12",
+    "python-jose[cryptography]>=3.3",
+    "celery[redis]>=5.4",
+    "redis>=5.2",
+]
+
+[dependency-groups]
+dev = [
+    "pytest>=8.3",
+    "pytest-asyncio>=0.25",
+    "httpx>=0.28",
+]
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+testpaths = ["tests"]
