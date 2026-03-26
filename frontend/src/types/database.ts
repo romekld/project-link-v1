@@ -15,7 +15,7 @@ export type UserRole =
   | 'nurse_phn'
   | 'phis_coordinator'
   | 'dso'
-  | 'admin'
+  | 'system_admin'
 
 export interface HealthStation {
   id: string

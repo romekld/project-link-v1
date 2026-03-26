@@ -157,7 +157,7 @@ PR → main
 
 ---
 
-- [ ] **Unit 1.0: Fix `system_admin` role naming**
+- [x] **Unit 1.0: Fix `system_admin` role naming**
 
 **Goal:** Correct the `UserRole` type in the frontend from `'admin'` to `'system_admin'` so the TypeScript type system is consistent with the SQL schema and RLS policies that TG1 will create.
 
@@ -181,7 +181,7 @@ PR → main
 
 ---
 
-- [ ] **Unit 1.1: Foundation schema migrations (PostGIS + 3 tables)**
+- [x] **Unit 1.1: Foundation schema migrations (PostGIS + 3 tables)**
 
 **Goal:** Enable the PostGIS extension and create the three foundation tables — `barangays`, `health_stations`, and `user_profiles` — in the correct FK dependency order.
 
@@ -220,7 +220,7 @@ PR → main
 
 ---
 
-- [ ] **Unit 1.2: JWT custom claim injection (Auth DB hook)**
+- [x] **Unit 1.2: JWT custom claim injection (Auth DB hook)**
 
 **Goal:** Create a PostgreSQL function that Supabase Auth calls at sign-in to inject `role` and `health_station_id` into the JWT from `user_profiles`.
 
@@ -255,7 +255,7 @@ PR → main
 
 ---
 
-- [ ] **Unit 1.3: RLS policies for foundation tables**
+- [x] **Unit 1.3: RLS policies for foundation tables**
 
 **Goal:** Enable Row-Level Security on `barangays`, `health_stations`, and `user_profiles` and apply the data isolation policies from `docs/architecture.md`.
 
@@ -293,7 +293,7 @@ PR → main
 
 ---
 
-- [ ] **Unit 1.4: Reports Storage bucket**
+- [x] **Unit 1.4: Reports Storage bucket**
 
 **Goal:** Create the `reports` Supabase Storage bucket (private) and apply access policies: PHN+ can upload; access is scoped by station folder.
 
