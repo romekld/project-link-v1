@@ -2,8 +2,8 @@ import { useState, useMemo } from 'react'
 import { Link, useNavigate, useParams } from '@tanstack/react-router'
 import { ChevronLeft } from 'lucide-react'
 import { Button } from '@/components/ui/button'
+import { Field, FieldDescription, FieldGroup, FieldLabel } from '@/components/ui/field'
 import { Input } from '@/components/ui/input'
-import { Label } from '@/components/ui/label'
 import { Textarea } from '@/components/ui/textarea'
 import { Checkbox } from '@/components/ui/checkbox'
 import { Separator } from '@/components/ui/separator'
@@ -106,7 +106,7 @@ export function NewEncounterPage() {
   }
 
   return (
-    <div className="space-y-6 pb-20">
+    <div className="mx-auto flex w-full max-w-4xl flex-col gap-6 pb-20">
       <Button variant="ghost" size="sm" className="-ml-1" onClick={() => navigate({ to: `/bhw/patients/${id}` })}>
         <ChevronLeft data-icon="inline-start" />
         Back to Patient
@@ -119,9 +119,9 @@ export function NewEncounterPage() {
         </p>
       </div>
 
-      <div className="space-y-8">
+      <div className="flex flex-col gap-8">
         {/* Section 1 — Consultation Type */}
-        <div className="space-y-4">
+        <div className="flex flex-col gap-4">
           <div>
             <Separator />
             <h2 className="mt-4 text-sm font-medium uppercase tracking-wide text-muted-foreground">Consultation Type</h2>
@@ -138,21 +138,21 @@ export function NewEncounterPage() {
         </div>
 
         {/* Section 2 — Vitals */}
-        <div className="space-y-4">
+        <div className="flex flex-col gap-4">
           <div>
             <Separator />
             <h2 className="mt-4 text-sm font-medium uppercase tracking-wide text-muted-foreground">Vitals</h2>
           </div>
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-            <div className="space-y-2">
-              <Label htmlFor="weight">Weight (kg)</Label>
+          <FieldGroup className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+            <Field>
+              <FieldLabel htmlFor="weight">Weight (kg)</FieldLabel>
               <Input id="weight" type="number" step="0.1" value={weight} onChange={(e) => setWeight(e.target.value)} />
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="height">Height (cm)</Label>
+            </Field>
+            <Field>
+              <FieldLabel htmlFor="height">Height (cm)</FieldLabel>
               <Input id="height" type="number" step="0.1" value={height} onChange={(e) => setHeight(e.target.value)} />
-            </div>
-          </div>
+            </Field>
+          </FieldGroup>
 
           {bmi !== null && bmiInfo && (
             <div className="rounded-lg border bg-muted/30 p-3">
@@ -164,30 +164,35 @@ export function NewEncounterPage() {
             </div>
           )}
 
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-            <div className="space-y-2">
-              <Label>Blood Pressure (mmHg)</Label>
-              <div className="flex items-center gap-2">
-                <Input type="number" placeholder="120" value={bpSystolic} onChange={(e) => setBpSystolic(e.target.value)} />
-                <span className="text-muted-foreground">/</span>
-                <Input type="number" placeholder="80" value={bpDiastolic} onChange={(e) => setBpDiastolic(e.target.value)} />
+          <FieldGroup className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+            <Field>
+              <FieldLabel>Blood Pressure (mmHg)</FieldLabel>
+              <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
+                <Field>
+                  <FieldLabel htmlFor="bp-systolic">Systolic</FieldLabel>
+                  <Input id="bp-systolic" type="number" placeholder="120" value={bpSystolic} onChange={(e) => setBpSystolic(e.target.value)} />
+                </Field>
+                <Field>
+                  <FieldLabel htmlFor="bp-diastolic">Diastolic</FieldLabel>
+                  <Input id="bp-diastolic" type="number" placeholder="80" value={bpDiastolic} onChange={(e) => setBpDiastolic(e.target.value)} />
+                </Field>
               </div>
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="temp">Temperature (&deg;C)</Label>
+            </Field>
+            <Field>
+              <FieldLabel htmlFor="temp">Temperature (&deg;C)</FieldLabel>
               <Input id="temp" type="number" step="0.1" value={temperature} onChange={(e) => setTemperature(e.target.value)} />
-            </div>
-          </div>
+            </Field>
+          </FieldGroup>
         </div>
 
         {/* Section 3 — Program Classification */}
-        <div className="space-y-4">
+        <div className="flex flex-col gap-4">
           <div>
             <Separator />
             <h2 className="mt-4 text-sm font-medium uppercase tracking-wide text-muted-foreground">Program Classification</h2>
           </div>
-          <div className="space-y-2 sm:max-w-xs">
-            <Label htmlFor="program">Program Category</Label>
+          <Field className="sm:max-w-xs">
+            <FieldLabel htmlFor="program">Program Category</FieldLabel>
             <Select value={programCategory} onValueChange={(v) => setProgramCategory(v as ProgramCategory)}>
               <SelectTrigger id="program" className="w-full">
                 <SelectValue placeholder="Select..." />
@@ -202,47 +207,50 @@ export function NewEncounterPage() {
                 <SelectItem value="TB">TB</SelectItem>
               </SelectContent>
             </Select>
-          </div>
+          </Field>
         </div>
 
         {/* Section 4 — Clinical Notes */}
-        <div className="space-y-4">
+        <div className="flex flex-col gap-4">
           <div>
             <Separator />
             <h2 className="mt-4 text-sm font-medium uppercase tracking-wide text-muted-foreground">Clinical Notes</h2>
           </div>
-          <div className="space-y-2">
-            <Label htmlFor="complaint">Chief Complaint</Label>
+          <Field>
+            <FieldLabel htmlFor="complaint">Chief Complaint</FieldLabel>
             <Textarea id="complaint" value={chiefComplaint} onChange={(e) => setChiefComplaint(e.target.value)} placeholder="e.g., Lagnat at ubo" />
-          </div>
-          <div className="space-y-2">
-            <Label htmlFor="notes">Clinical Notes</Label>
+          </Field>
+          <Field>
+            <FieldLabel htmlFor="notes">Clinical Notes</FieldLabel>
             <Textarea id="notes" value={clinicalNotes} onChange={(e) => setClinicalNotes(e.target.value)} placeholder="Physical exam observations..." />
-          </div>
-          <div className="space-y-2">
-            <Label htmlFor="diagnosis">Diagnosis / Impression</Label>
+          </Field>
+          <Field>
+            <FieldLabel htmlFor="diagnosis">Diagnosis / Impression</FieldLabel>
             <Textarea id="diagnosis" value={diagnosis} onChange={(e) => setDiagnosis(e.target.value)} placeholder="Initial assessment..." />
-          </div>
+          </Field>
         </div>
 
         {/* Section 5 — Consent */}
-        <div className="space-y-4">
+        <div className="flex flex-col gap-4">
           <div>
             <Separator />
             <h2 className="mt-4 text-sm font-medium uppercase tracking-wide text-muted-foreground">Consent</h2>
           </div>
-          <label className="flex items-start gap-3">
+          <label className="flex items-start gap-3 rounded-lg border border-border/60 p-3">
             <Checkbox checked={consentGiven} onCheckedChange={(v) => setConsentGiven(v === true)} className="mt-0.5" />
             <span className="text-sm leading-relaxed">
               I have obtained the patient&apos;s informed consent as required under the Data Privacy Act of 2012 (RA 10173).
             </span>
           </label>
+          <FieldDescription>
+            Save is enabled only after consent is checked.
+          </FieldDescription>
         </div>
       </div>
 
       {/* Sticky bottom bar */}
       <div className="fixed inset-x-0 bottom-0 z-10 border-t bg-background px-4 py-3">
-        <div className="mx-auto flex max-w-3xl items-center gap-3">
+        <div className="mx-auto flex w-full max-w-4xl items-center gap-3">
           <Button type="button" disabled={!consentGiven} onClick={handleSave}>
             Save
           </Button>

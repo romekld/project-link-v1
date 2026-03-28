@@ -131,21 +131,21 @@ export function UserListPage() {
   }
 
   return (
-    <div className="space-y-6">
+    <div className="mx-auto w-full max-w-4xl space-y-6">
       <div className="flex items-center justify-between">
         <div>
           <h1 className="font-heading text-2xl font-semibold">Users</h1>
           <p className="mt-1 text-sm text-muted-foreground">Manage system user accounts</p>
         </div>
         <Button nativeButton={false} render={<Link to="/admin/users/new" />}>
-          <UserPlus className="mr-2 size-4" />
+          <UserPlus data-icon="inline-start" />
           Create User
         </Button>
       </div>
 
       {/* Filters */}
-      <div className="flex flex-wrap gap-3">
-        <div className="relative min-w-48 flex-1">
+      <div className="grid grid-cols-1 gap-3 md:grid-cols-[minmax(0,1fr)_180px_180px]">
+        <div className="relative min-w-48">
           <Search className="absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
           <Input
             placeholder="Search by name…"
@@ -159,7 +159,7 @@ export function UserListPage() {
           value={roleFilter === '' ? 'all' : roleFilter}
           onValueChange={(v) => setRoleFilter(v === 'all' ? '' : v as UserRole)}
         >
-          <SelectTrigger className="min-w-[150px]">
+          <SelectTrigger className="w-full">
             <SelectValue />
           </SelectTrigger>
           <SelectContent>
@@ -174,7 +174,7 @@ export function UserListPage() {
           value={stationFilter === '' ? 'all' : stationFilter}
           onValueChange={(v) => setStationFilter(v === 'all' || v == null ? '' : v)}
         >
-          <SelectTrigger className="min-w-[150px]">
+          <SelectTrigger className="w-full">
             <SelectValue />
           </SelectTrigger>
           <SelectContent>
@@ -187,7 +187,7 @@ export function UserListPage() {
       </div>
 
       {/* Table */}
-      <div className="rounded-md border">
+      <div className="overflow-x-auto rounded-md border">
         <Table>
           <TableHeader>
             <TableRow>

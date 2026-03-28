@@ -2,8 +2,9 @@ import { useEffect, useState } from 'react'
 import { useNavigate } from '@tanstack/react-router'
 import { supabase } from '@/lib/supabase'
 import { Button } from '@/components/ui/button'
+import { DatePicker } from '@/components/ui/date-picker'
+import { Field, FieldDescription, FieldGroup, FieldLabel } from '@/components/ui/field'
 import { Input } from '@/components/ui/input'
-import { Label } from '@/components/ui/label'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import {
   Select,
@@ -157,6 +158,11 @@ export function UserForm({ mode, userId }: UserFormProps) {
       return
     }
 
+    if (!dateOfBirth) {
+      setError('Date of Birth is required.')
+      return
+    }
+
     // Validate mobile number format if provided
     if (mobileNumber && !/^\+639\d{9}$/.test(mobileNumber)) {
       setError('Mobile number must be in the format +639XXXXXXXXX (e.g. +639171234567).')
@@ -224,16 +230,16 @@ export function UserForm({ mode, userId }: UserFormProps) {
   }
 
   return (
-    <form onSubmit={handleSubmit}>
-      <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
+    <form onSubmit={handleSubmit} className="mx-auto w-full max-w-4xl">
+      <div className="grid grid-cols-1 gap-6 xl:grid-cols-[minmax(0,2fr)_minmax(280px,1fr)] xl:items-start">
         {/* Left column: form fields (spans 2 of 3 cols) */}
-        <div className="space-y-6 lg:col-span-2">
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+        <div className="flex flex-col gap-6">
+          <FieldGroup className="grid grid-cols-1 gap-4 sm:grid-cols-2">
             {/* Full Name */}
-            <div className="space-y-2 sm:col-span-2">
-              <Label htmlFor="full-name">
+            <Field className="sm:col-span-2">
+              <FieldLabel htmlFor="full-name">
                 Full Name <span className="text-destructive">*</span>
-              </Label>
+              </FieldLabel>
               <Input
                 id="full-name"
                 value={fullName}
@@ -241,14 +247,14 @@ export function UserForm({ mode, userId }: UserFormProps) {
                 placeholder="Last, First, Middle"
                 required
               />
-            </div>
+            </Field>
 
             {/* Email (create only) */}
             {mode === 'create' && (
-              <div className="space-y-2">
-                <Label htmlFor="email">
+              <Field>
+                <FieldLabel htmlFor="email">
                   Email <span className="text-destructive">*</span>
-                </Label>
+                </FieldLabel>
                 <Input
                   id="email"
                   type="email"
@@ -257,14 +263,14 @@ export function UserForm({ mode, userId }: UserFormProps) {
                   placeholder="user@cho2.gov.ph"
                   required
                 />
-              </div>
+              </Field>
             )}
 
             {/* Username */}
-            <div className="space-y-2">
-              <Label htmlFor="username">
+            <Field>
+              <FieldLabel htmlFor="username">
                 Username <span className="text-destructive">*</span>
-              </Label>
+              </FieldLabel>
               <Input
                 id="username"
                 value={username}
@@ -272,27 +278,21 @@ export function UserForm({ mode, userId }: UserFormProps) {
                 placeholder="e.g. s.redona_kld"
                 required
               />
-            </div>
+            </Field>
 
             {/* Date of Birth */}
-            <div className="space-y-2">
-              <Label htmlFor="dob">
+            <Field>
+              <FieldLabel htmlFor="dob">
                 Date of Birth <span className="text-destructive">*</span>
-              </Label>
-              <Input
-                id="dob"
-                type="date"
-                value={dateOfBirth}
-                onChange={(e) => setDateOfBirth(e.target.value)}
-                required
-              />
-            </div>
+              </FieldLabel>
+              <DatePicker id="dob" value={dateOfBirth} onChange={setDateOfBirth} />
+            </Field>
 
             {/* Sex */}
-            <div className="space-y-2">
-              <Label htmlFor="sex">
+            <Field>
+              <FieldLabel htmlFor="sex">
                 Sex <span className="text-destructive">*</span>
-              </Label>
+              </FieldLabel>
               <Select value={sex} onValueChange={(v) => setSex(v as 'M' | 'F')}>
                 <SelectTrigger id="sex" className="w-full">
                   <SelectValue placeholder="Select…" />
@@ -302,11 +302,11 @@ export function UserForm({ mode, userId }: UserFormProps) {
                   <SelectItem value="F">Female</SelectItem>
                 </SelectContent>
               </Select>
-            </div>
+            </Field>
 
             {/* Mobile Number */}
-            <div className="space-y-2">
-              <Label htmlFor="mobile">Mobile Number</Label>
+            <Field>
+              <FieldLabel htmlFor="mobile">Mobile Number</FieldLabel>
               <Input
                 id="mobile"
                 type="tel"
@@ -314,14 +314,14 @@ export function UserForm({ mode, userId }: UserFormProps) {
                 onChange={(e) => setMobileNumber(e.target.value)}
                 placeholder="+639171234567"
               />
-              <p className="text-xs text-muted-foreground">Format: +639XXXXXXXXX</p>
-            </div>
+              <FieldDescription>Format: +639XXXXXXXXX</FieldDescription>
+            </Field>
 
             {/* Role */}
-            <div className="space-y-2">
-              <Label htmlFor="role">
+            <Field>
+              <FieldLabel htmlFor="role">
                 Role <span className="text-destructive">*</span>
-              </Label>
+              </FieldLabel>
               <Select
                 value={role}
                 onValueChange={(v) => {
@@ -341,14 +341,14 @@ export function UserForm({ mode, userId }: UserFormProps) {
                   ))}
                 </SelectContent>
               </Select>
-            </div>
+            </Field>
 
             {/* BHS Assignment — only for bhw / midwife_rhm */}
             {needsStation && (
-              <div className="space-y-2">
-                <Label htmlFor="bhs">
+              <Field>
+                <FieldLabel htmlFor="bhs">
                   BHS Assignment <span className="text-destructive">*</span>
-                </Label>
+                </FieldLabel>
                 <Select value={healthStationId} onValueChange={(v) => setHealthStationId(v ?? '')}>
                   <SelectTrigger id="bhs" className="w-full">
                     <SelectValue placeholder="Select station…" />
@@ -361,28 +361,28 @@ export function UserForm({ mode, userId }: UserFormProps) {
                     ))}
                   </SelectContent>
                 </Select>
-              </div>
+              </Field>
             )}
 
             {/* Purok Assignment — only for bhw */}
             {needsPurok && (
-              <div className="space-y-2">
-                <Label htmlFor="purok">Purok Assignment</Label>
+              <Field>
+                <FieldLabel htmlFor="purok">Purok Assignment</FieldLabel>
                 <Input
                   id="purok"
                   value={purokAssignment}
                   onChange={(e) => setPurokAssignment(e.target.value)}
                   placeholder="e.g. Purok 3"
                 />
-              </div>
+              </Field>
             )}
 
             {/* Initial Password — create only */}
             {mode === 'create' && (
-              <div className="space-y-2 sm:col-span-2">
-                <Label htmlFor="password">
+              <Field className="sm:col-span-2">
+                <FieldLabel htmlFor="password">
                   Initial Password <span className="text-destructive">*</span>
-                </Label>
+                </FieldLabel>
                 <div className="relative">
                   <Input
                     id="password"
@@ -401,12 +401,12 @@ export function UserForm({ mode, userId }: UserFormProps) {
                     {showPassword ? 'Hide' : 'Show'}
                   </button>
                 </div>
-                <p className="text-xs text-muted-foreground">
+                <FieldDescription>
                   User will be required to change this password on first login.
-                </p>
-              </div>
+                </FieldDescription>
+              </Field>
             )}
-          </div>
+          </FieldGroup>
 
           {error && (
             <p className="text-sm font-medium text-destructive" role="alert">{error}</p>
@@ -427,7 +427,7 @@ export function UserForm({ mode, userId }: UserFormProps) {
         {/* Right column: role summary card */}
         <div>
           {selectedRoleInfo ? (
-            <Card className="sticky top-4">
+            <Card className="xl:sticky xl:top-24">
               <CardHeader className="pb-2">
                 <CardTitle className="text-base">{selectedRoleInfo.label}</CardTitle>
               </CardHeader>

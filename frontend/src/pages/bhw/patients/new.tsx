@@ -2,8 +2,9 @@ import { useState } from 'react'
 import { Link, useNavigate, useSearch } from '@tanstack/react-router'
 import { ChevronLeft } from 'lucide-react'
 import { Button } from '@/components/ui/button'
+import { DatePicker } from '@/components/ui/date-picker'
+import { Field, FieldGroup, FieldLabel, FieldLegend, FieldSet } from '@/components/ui/field'
 import { Input } from '@/components/ui/input'
-import { Label } from '@/components/ui/label'
 import { Checkbox } from '@/components/ui/checkbox'
 import { Separator } from '@/components/ui/separator'
 import {
@@ -84,7 +85,7 @@ export function PatientRegistrationPage() {
   }
 
   return (
-    <div className="space-y-6">
+    <div className="mx-auto flex w-full max-w-4xl flex-col gap-6">
       <Button variant="ghost" size="sm" nativeButton={false} render={<Link to="/bhw/patients/search" />} className="-ml-1">
         <ChevronLeft data-icon="inline-start" />
         Back to Patients
@@ -95,34 +96,34 @@ export function PatientRegistrationPage() {
         <p className="mt-1 text-sm text-muted-foreground">Fill in patient demographics and administrative info.</p>
       </div>
 
-      <form onSubmit={handleSubmit} className="space-y-8">
+      <form onSubmit={handleSubmit} className="flex flex-col gap-8">
         {/* Section 1 — Personal Information */}
-        <div className="space-y-4">
+        <div className="flex flex-col gap-4">
           <div>
             <Separator />
             <h2 className="mt-4 text-sm font-medium uppercase tracking-wide text-muted-foreground">Personal Information</h2>
           </div>
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-            <div className="space-y-2">
-              <Label htmlFor="last-name">Last Name <span className="text-destructive">*</span></Label>
+          <FieldGroup className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+            <Field>
+              <FieldLabel htmlFor="last-name">Last Name <span className="text-destructive">*</span></FieldLabel>
               <Input id="last-name" value={lastName} onChange={(e) => setLastName(e.target.value)} />
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="first-name">First Name <span className="text-destructive">*</span></Label>
+            </Field>
+            <Field>
+              <FieldLabel htmlFor="first-name">First Name <span className="text-destructive">*</span></FieldLabel>
               <Input id="first-name" value={firstName} onChange={(e) => setFirstName(e.target.value)} />
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="middle-name">Middle Name</Label>
+            </Field>
+            <Field>
+              <FieldLabel htmlFor="middle-name">Middle Name</FieldLabel>
               <Input id="middle-name" value={middleName} onChange={(e) => setMiddleName(e.target.value)} placeholder="N/A if not applicable" />
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="suffix">Suffix</Label>
+            </Field>
+            <Field>
+              <FieldLabel htmlFor="suffix">Suffix</FieldLabel>
               <Input id="suffix" value={suffix} onChange={(e) => setSuffix(e.target.value)} placeholder="Jr., Sr., III" />
-            </div>
-          </div>
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-            <div className="space-y-2">
-              <Label htmlFor="sex">Sex at Birth <span className="text-destructive">*</span></Label>
+            </Field>
+          </FieldGroup>
+          <FieldGroup className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+            <Field>
+              <FieldLabel htmlFor="sex">Sex at Birth <span className="text-destructive">*</span></FieldLabel>
               <Select value={sex} onValueChange={(v) => setSex(v as 'Male' | 'Female')}>
                 <SelectTrigger id="sex" className="w-full">
                   <SelectValue placeholder="Select..." />
@@ -132,14 +133,14 @@ export function PatientRegistrationPage() {
                   <SelectItem value="Female">Female</SelectItem>
                 </SelectContent>
               </Select>
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="dob">Date of Birth <span className="text-destructive">*</span></Label>
-              <Input id="dob" type="date" value={dateOfBirth} onChange={(e) => setDateOfBirth(e.target.value)} />
-            </div>
-          </div>
-          <div className="space-y-2 sm:max-w-xs">
-            <Label htmlFor="civil-status">Civil Status <span className="text-destructive">*</span></Label>
+            </Field>
+            <Field>
+              <FieldLabel htmlFor="dob">Date of Birth <span className="text-destructive">*</span></FieldLabel>
+              <DatePicker id="dob" value={dateOfBirth} onChange={setDateOfBirth} />
+            </Field>
+          </FieldGroup>
+          <Field className="sm:max-w-xs">
+            <FieldLabel htmlFor="civil-status">Civil Status <span className="text-destructive">*</span></FieldLabel>
             <Select value={civilStatus} onValueChange={(v) => setCivilStatus(v as Patient['civil_status'])}>
               <SelectTrigger id="civil-status" className="w-full">
                 <SelectValue placeholder="Select..." />
@@ -152,44 +153,44 @@ export function PatientRegistrationPage() {
                 <SelectItem value="Co-habiting">Co-habiting</SelectItem>
               </SelectContent>
             </Select>
-          </div>
+          </Field>
         </div>
 
         {/* Section 2 — Address */}
-        <div className="space-y-4">
+        <div className="flex flex-col gap-4">
           <div>
             <Separator />
             <h2 className="mt-4 text-sm font-medium uppercase tracking-wide text-muted-foreground">Address</h2>
           </div>
-          <div className="space-y-2">
-            <Label htmlFor="barangay">Barangay <span className="text-destructive">*</span></Label>
+          <Field>
+            <FieldLabel htmlFor="barangay">Barangay <span className="text-destructive">*</span></FieldLabel>
             <Input id="barangay" value={barangay} onChange={(e) => setBarangay(e.target.value)} />
-          </div>
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-            <div className="space-y-2">
-              <Label htmlFor="purok">Purok / Sub-Zone <span className="text-destructive">*</span></Label>
+          </Field>
+          <FieldGroup className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+            <Field>
+              <FieldLabel htmlFor="purok">Purok / Sub-Zone <span className="text-destructive">*</span></FieldLabel>
               <Input id="purok" value={purok} onChange={(e) => setPurok(e.target.value)} />
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="street">Street / House No.</Label>
+            </Field>
+            <Field>
+              <FieldLabel htmlFor="street">Street / House No.</FieldLabel>
               <Input id="street" value={streetHouseNo} onChange={(e) => setStreetHouseNo(e.target.value)} />
-            </div>
-          </div>
+            </Field>
+          </FieldGroup>
         </div>
 
         {/* Section 3 — Administrative */}
-        <div className="space-y-4">
+        <div className="flex flex-col gap-4">
           <div>
             <Separator />
             <h2 className="mt-4 text-sm font-medium uppercase tracking-wide text-muted-foreground">Administrative</h2>
           </div>
-          <div className="space-y-2 sm:max-w-sm">
-            <Label htmlFor="philhealth">PhilHealth ID</Label>
+          <Field className="sm:max-w-sm">
+            <FieldLabel htmlFor="philhealth">PhilHealth ID</FieldLabel>
             <Input id="philhealth" value={philhealthId} onChange={(e) => setPhilhealthId(e.target.value)} placeholder="00-000000000-0 if Non-Member" />
-          </div>
-          <div className="space-y-3">
-            <Label>Socio-Economic Classification</Label>
-            <div className="space-y-2">
+          </Field>
+          <FieldSet>
+            <FieldLegend variant="label">Socio-Economic Classification</FieldLegend>
+            <div className="flex flex-col gap-2">
               <label className="flex items-center gap-2">
                 <Checkbox checked={isNhts} onCheckedChange={(v) => setIsNhts(v === true)} />
                 <span className="text-sm">NHTS-PR</span>
@@ -203,14 +204,14 @@ export function PatientRegistrationPage() {
                 <span className="text-sm">Indigenous Person (IP)</span>
               </label>
             </div>
-          </div>
+          </FieldSet>
         </div>
 
         {error && (
           <p className="text-sm font-medium text-destructive" role="alert">{error}</p>
         )}
 
-        <div className="flex gap-3">
+        <div className="flex flex-wrap gap-3">
           <Button type="submit">Register Patient</Button>
           <Button type="button" variant="outline" onClick={() => navigate({ to: '/bhw/patients/search' })}>
             Cancel

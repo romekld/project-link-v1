@@ -13,7 +13,8 @@
       "Bash(pip install:*)",
       "Bash(python -c \":*)",
       "Bash(python -u:*)",
-      "Bash(python docs/research/fhsis_mop/_extract.py)"
+      "Bash(python docs/research/fhsis_mop/_extract.py)",
+      "Bash(wc -l /d/project-link/supabase/migrations/*.sql)"
     ]
   },
   "enabledPlugins": {

@@ -26,11 +26,11 @@ export function PatientSearchPage() {
     : null
 
   return (
-    <div className="space-y-6">
+    <div className="mx-auto w-full max-w-4xl space-y-6">
       <div className="flex items-center justify-between">
         <h1 className="font-heading text-2xl font-semibold">Patients</h1>
         <Button nativeButton={false} render={<Link to="/bhw/patients/new" />}>
-          <UserPlus className="mr-2 size-4" />
+          <UserPlus data-icon="inline-start" />
           Register New Patient
         </Button>
       </div>
@@ -54,7 +54,7 @@ export function PatientSearchPage() {
             variant="outline"
             onClick={() => navigate({ to: '/bhw/patients/new', search: { name: query } })}
           >
-            <UserPlus className="mr-2 size-4" />
+            <UserPlus data-icon="inline-start" />
             Register as New Patient
           </Button>
         </div>

@@ -17,10 +17,10 @@ export function EditUserPage() {
   })
 
   return (
-    <div className="space-y-6">
+    <div className="mx-auto w-full max-w-4xl space-y-6">
       <div className="flex items-center gap-3">
         <Button variant="ghost" size="sm" nativeButton={false} render={<Link to="/admin/users" />} className="-ml-1">
-          <ChevronLeft className="mr-1 size-4" />
+          <ChevronLeft data-icon="inline-start" />
           Back to Users
         </Button>
       </div>
