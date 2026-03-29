@@ -20,13 +20,12 @@ const DEV_ROLE = env.devRole
 
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [session, setSession] = useState<Session | null>(null)
-  const [loading, setLoading] = useState(true)
+  const [loading, setLoading] = useState(!env.disableAuth)
   // Tracks if user has dismissed the change-password dialog this session
   const [passwordDialogDismissed, setPasswordDialogDismissed] = useState(false)
 
   useEffect(() => {
     if (env.disableAuth) {
-      setLoading(false)
       return
     }
 

@@ -23,6 +23,8 @@ import {
   History,
   UserPlus,
   Wifi,
+  Home,
+  FolderTree,
   type LucideIcon,
 } from 'lucide-react'
 
@@ -43,6 +45,7 @@ export const NAV_CONFIG: Record<UserRole, NavItem[]> = {
   bhw: [
     { title: 'Dashboard', url: '/bhw/dashboard', icon: LayoutDashboard },
     { title: 'Patients', url: '/bhw/patients/search', icon: Users },
+    { title: 'Households', url: '/bhw/households', icon: Home },
     {
       title: 'New Visit', url: '/bhw/visits', icon: ClipboardList,
       children: [
@@ -59,25 +62,27 @@ export const NAV_CONFIG: Record<UserRole, NavItem[]> = {
   midwife_rhm: [
     { title: 'Dashboard', url: '/midwife/dashboard', icon: LayoutDashboard },
     { title: 'Validation Queue', url: '/midwife/validation', icon: CheckSquare },
+    { title: 'HH Profiles', url: '/midwife/hh-profiles', icon: FolderTree },
     { title: 'Patients', url: '/midwife/patients', icon: Users },
     {
       title: 'TCL Registries', url: '/midwife/tcl', icon: BookOpen,
       children: [
-        { title: 'Maternal Care', url: '/midwife/tcl/maternal' },
-        { title: 'EPI Registry', url: '/midwife/tcl/epi' },
-        { title: 'TB Register', url: '/midwife/tcl/tb' },
-        { title: 'NCD List', url: '/midwife/tcl/ncd' },
-        { title: 'Nutrition Masterlist', url: '/midwife/tcl/nutrition' },
+        { title: 'Maternal Care TCL', url: '/midwife/tcl/maternal' },
+        { title: 'Child Care TCL Part 1', url: '/midwife/tcl/child-care-0-11' },
+        { title: 'Child Care TCL Part 2', url: '/midwife/tcl/child-care-12-59' },
+        { title: 'NCD TCL Part 1', url: '/midwife/tcl/ncd' },
       ],
     },
-    { title: 'TB Cases', url: '/midwife/tb-cases', icon: Pill },
-    { title: 'PIDSR', url: '/midwife/pidsr', icon: AlertTriangle },
+    { title: 'NTP Registry', url: '/midwife/tb-cases', icon: Pill },
     {
       title: 'Reports', url: '/midwife/reports', icon: FileText,
       children: [
         { title: 'Generate ST', url: '/midwife/reports/st' },
+        { title: 'Generate M1', url: '/midwife/reports/m1' },
+        { title: 'Generate M2', url: '/midwife/reports/m2' },
       ],
     },
+    { title: 'PIDSR', url: '/midwife/pidsr', icon: AlertTriangle },
     { title: 'Inventory', url: '/midwife/inventory', icon: Database },
   ],
 
@@ -157,7 +162,7 @@ export const QUICK_LINKS_CONFIG: Record<UserRole, QuickLink[]> = {
   ],
   midwife_rhm: [
     { title: 'Maternal Care TCL', url: '/midwife/tcl/maternal', icon: Baby },
-    { title: 'EPI Registry', url: '/midwife/tcl/epi', icon: Syringe },
+    { title: 'Reports', url: '/midwife/reports', icon: Syringe },
   ],
   nurse_phn: [
     { title: 'Disease Map', url: '/phn/intelligence/map', icon: Map },

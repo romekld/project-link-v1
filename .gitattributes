@@ -1,7 +1,0 @@
-# Set default behavior to handle line endings automatically.
-* text=auto
-
-# Denote all files that are truly to be treated as text and normalized (LF in repo, OS-dependent locally).
-# The 'text=auto' above handles this for most files, but you can be explicit if needed.
-# Forcing LF for all text files (recommended for cross-platform projects):
-* text eol=lf

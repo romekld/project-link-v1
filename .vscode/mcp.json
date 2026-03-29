@@ -1,0 +1,11 @@
+{
+  "servers": {
+    "shadcn": {
+      "type": "stdio",
+      "command": "npx",
+      "args": ["-y", "shadcn@latest", "mcp"],
+      "gallery": "https://api.mcp.github.com",
+      "version": "latest"
+    }
+  }
+}

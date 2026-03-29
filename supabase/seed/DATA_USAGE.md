@@ -5,7 +5,7 @@ This directory contains the GeoJSON data used for initializing the spatial regis
 ## Files
 
 - `gis/dasmarinas_boundaries.geojson`: Official municipal and barangay boundaries for Dasmariñas City.
-- `gis/cho2-boundaries.geojson`: Specific coverage boundaries for City Health Office 2 (CHO2).
+- `gis/cho2_boundaries.geojson`: Specific coverage boundaries for City Health Office 2 (CHO2).
 
 ## Purpose and Usage
 
@@ -28,4 +28,4 @@ This structure enables "Dynamic Flexible Work":
 By storing polygons in the Master Registry, the system can:
 
 - **Auto-Assignment:** Use `ST_Within` to automatically identify which barangay a patient belongs to based on GPS coordinates.
-- **CHO Scoping:** Use `cho2-boundaries.geojson` to filter or select which master barangays should be active for a specific office.
+- **CHO Scoping:** Use `cho2_boundaries.geojson` to filter or select which master barangays should be active for a specific office.

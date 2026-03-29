@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { Link, useNavigate } from '@tanstack/react-router'
 import { supabase } from '@/lib/supabase'
 import { Button } from '@/components/ui/button'
@@ -84,7 +84,7 @@ export function UserListPage() {
   const [confirmUser, setConfirmUser] = useState<UserWithStation | null>(null)
   const [toggling, setToggling] = useState(false)
 
-  const fetchUsers = async () => {
+  const fetchUsers = useCallback(async () => {
     setLoading(true)
     let query = supabase
       .from('user_profiles')
@@ -105,7 +105,7 @@ export function UserListPage() {
       )
     }
     setLoading(false)
-  }
+  }, [roleFilter, search, stationFilter])
 
   useEffect(() => {
     supabase
@@ -115,8 +115,10 @@ export function UserListPage() {
       .then(({ data }) => setStations(data ?? []))
   }, [])
 
-  // eslint-disable-next-line react-hooks/set-state-in-effect
-  useEffect(() => { fetchUsers() }, [search, roleFilter, stationFilter])
+  useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    fetchUsers()
+  }, [fetchUsers])
 
   const handleToggleActive = async () => {
     if (!confirmUser) return

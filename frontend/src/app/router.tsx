@@ -9,6 +9,7 @@ import { Providers } from '@/app/providers'
 import { AppShell } from '@/components/layout/app-shell'
 import { supabase } from '@/lib/supabase'
 import { env } from '@/config/env'
+import { IntelligenceMapPage } from '@/features/intelligence'
 import type { UserRole } from '@/types'
 
 // ---------------------------------------------------------------------------
@@ -107,6 +108,9 @@ import { PatientRegistrationPage } from '@/pages/bhw/patients/new'
 import { PatientDetailPage } from '@/pages/bhw/patients/$id'
 import { NewEncounterPage } from '@/pages/bhw/patients/$id.encounters.new'
 import { EncounterDetailPage } from '@/pages/bhw/patients/$id.encounters.$eid'
+import { HouseholdListPage } from '@/pages/bhw/households'
+import { NewHouseholdPage } from '@/pages/bhw/households/new'
+import { HouseholdDetailPage } from '@/pages/bhw/households/$id'
 import { PlaceholderPage } from '@/pages/placeholder'
 
 const bhwLayoutRoute = createRoute({
@@ -145,6 +149,21 @@ const bhwEncounterDetailRoute = createRoute({
   path: '/patients/$id/encounters/$eid',
   component: EncounterDetailPage,
 })
+const bhwHouseholdsRoute = createRoute({
+  getParentRoute: () => bhwLayoutRoute,
+  path: '/households',
+  component: HouseholdListPage,
+})
+const bhwHouseholdsNewRoute = createRoute({
+  getParentRoute: () => bhwLayoutRoute,
+  path: '/households/new',
+  component: NewHouseholdPage,
+})
+const bhwHouseholdDetailRoute = createRoute({
+  getParentRoute: () => bhwLayoutRoute,
+  path: '/households/$id',
+  component: HouseholdDetailPage,
+})
 const bhwCatchAllRoute = createRoute({
   getParentRoute: () => bhwLayoutRoute,
   path: '/$',
@@ -155,6 +174,26 @@ const bhwCatchAllRoute = createRoute({
 // Midwife routes
 // ---------------------------------------------------------------------------
 import { MidwifeDashboardPage } from '@/pages/midwife/dashboard'
+import { MidwifeValidationQueuePage } from '@/pages/midwife/validation'
+import { MidwifeValidationRecordPage } from '@/pages/midwife/validation.$id'
+import { MidwifeHouseholdProfilesPage } from '@/pages/midwife/hh-profiles'
+import { MidwifeHouseholdSubmissionPage } from '@/pages/midwife/hh-profiles.$id'
+import { MidwifeMasterListsPage } from '@/pages/midwife/hh-profiles.master-lists'
+import { MidwifePatientsPage } from '@/pages/midwife/patients'
+import { MidwifePatientDetailPage } from '@/pages/midwife/patients.$id'
+import { MidwifeMaternalTclPage } from '@/pages/midwife/tcl.maternal'
+import { MidwifeChildCarePartOnePage } from '@/pages/midwife/tcl.child-care-0-11'
+import { MidwifeChildCarePartTwoPage } from '@/pages/midwife/tcl.child-care-12-59'
+import { MidwifeNcdTclPage } from '@/pages/midwife/tcl.ncd'
+import { MidwifeTbCasesPage } from '@/pages/midwife/tb-cases'
+import { MidwifeNewTbCasePage } from '@/pages/midwife/tb-cases.new'
+import { MidwifeTbCaseDetailPage } from '@/pages/midwife/tb-cases.$id'
+import { MidwifeReportsPage } from '@/pages/midwife/reports'
+import { MidwifeSummaryTablePage } from '@/pages/midwife/reports.st'
+import { MidwifeM1ReportPage } from '@/pages/midwife/reports.m1'
+import { MidwifeM2ReportPage } from '@/pages/midwife/reports.m2'
+import { MidwifePidsrPage } from '@/pages/midwife/pidsr'
+import { MidwifeInventoryPage } from '@/pages/midwife/inventory'
 
 const midwifeLayoutRoute = createRoute({
   getParentRoute: () => rootRoute,
@@ -166,6 +205,106 @@ const midwifeDashboardRoute = createRoute({
   getParentRoute: () => midwifeLayoutRoute,
   path: '/dashboard',
   component: MidwifeDashboardPage,
+})
+const midwifeValidationRoute = createRoute({
+  getParentRoute: () => midwifeLayoutRoute,
+  path: '/validation',
+  component: MidwifeValidationQueuePage,
+})
+const midwifeValidationRecordRoute = createRoute({
+  getParentRoute: () => midwifeLayoutRoute,
+  path: '/validation/$recordId',
+  component: MidwifeValidationRecordPage,
+})
+const midwifeHouseholdProfilesRoute = createRoute({
+  getParentRoute: () => midwifeLayoutRoute,
+  path: '/hh-profiles',
+  component: MidwifeHouseholdProfilesPage,
+})
+const midwifeHouseholdSubmissionRoute = createRoute({
+  getParentRoute: () => midwifeLayoutRoute,
+  path: '/hh-profiles/$submissionId',
+  component: MidwifeHouseholdSubmissionPage,
+})
+const midwifeMasterListsRoute = createRoute({
+  getParentRoute: () => midwifeLayoutRoute,
+  path: '/hh-profiles/master-lists',
+  component: MidwifeMasterListsPage,
+})
+const midwifePatientsRoute = createRoute({
+  getParentRoute: () => midwifeLayoutRoute,
+  path: '/patients',
+  component: MidwifePatientsPage,
+})
+const midwifePatientDetailRoute = createRoute({
+  getParentRoute: () => midwifeLayoutRoute,
+  path: '/patients/$id',
+  component: MidwifePatientDetailPage,
+})
+const midwifeTclMaternalRoute = createRoute({
+  getParentRoute: () => midwifeLayoutRoute,
+  path: '/tcl/maternal',
+  component: MidwifeMaternalTclPage,
+})
+const midwifeTclChildCarePartOneRoute = createRoute({
+  getParentRoute: () => midwifeLayoutRoute,
+  path: '/tcl/child-care-0-11',
+  component: MidwifeChildCarePartOnePage,
+})
+const midwifeTclChildCarePartTwoRoute = createRoute({
+  getParentRoute: () => midwifeLayoutRoute,
+  path: '/tcl/child-care-12-59',
+  component: MidwifeChildCarePartTwoPage,
+})
+const midwifeTclNcdRoute = createRoute({
+  getParentRoute: () => midwifeLayoutRoute,
+  path: '/tcl/ncd',
+  component: MidwifeNcdTclPage,
+})
+const midwifeTbCasesRoute = createRoute({
+  getParentRoute: () => midwifeLayoutRoute,
+  path: '/tb-cases',
+  component: MidwifeTbCasesPage,
+})
+const midwifeTbCaseNewRoute = createRoute({
+  getParentRoute: () => midwifeLayoutRoute,
+  path: '/tb-cases/new',
+  component: MidwifeNewTbCasePage,
+})
+const midwifeTbCaseDetailRoute = createRoute({
+  getParentRoute: () => midwifeLayoutRoute,
+  path: '/tb-cases/$caseId',
+  component: MidwifeTbCaseDetailPage,
+})
+const midwifeReportsRoute = createRoute({
+  getParentRoute: () => midwifeLayoutRoute,
+  path: '/reports',
+  component: MidwifeReportsPage,
+})
+const midwifeSummaryTableRoute = createRoute({
+  getParentRoute: () => midwifeLayoutRoute,
+  path: '/reports/st',
+  component: MidwifeSummaryTablePage,
+})
+const midwifeM1ReportRoute = createRoute({
+  getParentRoute: () => midwifeLayoutRoute,
+  path: '/reports/m1',
+  component: MidwifeM1ReportPage,
+})
+const midwifeM2ReportRoute = createRoute({
+  getParentRoute: () => midwifeLayoutRoute,
+  path: '/reports/m2',
+  component: MidwifeM2ReportPage,
+})
+const midwifePidsrRoute = createRoute({
+  getParentRoute: () => midwifeLayoutRoute,
+  path: '/pidsr',
+  component: MidwifePidsrPage,
+})
+const midwifeInventoryRoute = createRoute({
+  getParentRoute: () => midwifeLayoutRoute,
+  path: '/inventory',
+  component: MidwifeInventoryPage,
 })
 const midwifeCatchAllRoute = createRoute({
   getParentRoute: () => midwifeLayoutRoute,
@@ -188,6 +327,11 @@ const phnDashboardRoute = createRoute({
   getParentRoute: () => phnLayoutRoute,
   path: '/dashboard',
   component: PHNDashboardPage,
+})
+const phnIntelligenceMapRoute = createRoute({
+  getParentRoute: () => phnLayoutRoute,
+  path: '/intelligence/map',
+  component: () => <IntelligenceMapPage roleView="phn" />,
 })
 const phnCatchAllRoute = createRoute({
   getParentRoute: () => phnLayoutRoute,
@@ -233,6 +377,11 @@ const dsoDashboardRoute = createRoute({
   path: '/dashboard',
   component: DSODashboardPage,
 })
+const dsoIntelligenceMapRoute = createRoute({
+  getParentRoute: () => dsoLayoutRoute,
+  path: '/intelligence/map',
+  component: () => <IntelligenceMapPage roleView="dso" />,
+})
 const dsoCatchAllRoute = createRoute({
   getParentRoute: () => dsoLayoutRoute,
   path: '/$',
@@ -254,6 +403,11 @@ const choDashboardRoute = createRoute({
   getParentRoute: () => choLayoutRoute,
   path: '/dashboard',
   component: CHODashboardPage,
+})
+const choIntelligenceMapRoute = createRoute({
+  getParentRoute: () => choLayoutRoute,
+  path: '/intelligence/map',
+  component: () => <IntelligenceMapPage roleView="cho" />,
 })
 const choCatchAllRoute = createRoute({
   getParentRoute: () => choLayoutRoute,
@@ -314,13 +468,39 @@ const routeTree = rootRoute.addChildren([
     bhwPatientDetailRoute,
     bhwEncounterNewRoute,
     bhwEncounterDetailRoute,
+    bhwHouseholdsRoute,
+    bhwHouseholdsNewRoute,
+    bhwHouseholdDetailRoute,
     bhwCatchAllRoute,
   ]),
-  midwifeLayoutRoute.addChildren([midwifeDashboardRoute, midwifeCatchAllRoute]),
-  phnLayoutRoute.addChildren([phnDashboardRoute, phnCatchAllRoute]),
+  midwifeLayoutRoute.addChildren([
+    midwifeDashboardRoute,
+    midwifeValidationRoute,
+    midwifeValidationRecordRoute,
+    midwifeHouseholdProfilesRoute,
+    midwifeHouseholdSubmissionRoute,
+    midwifeMasterListsRoute,
+    midwifePatientsRoute,
+    midwifePatientDetailRoute,
+    midwifeTclMaternalRoute,
+    midwifeTclChildCarePartOneRoute,
+    midwifeTclChildCarePartTwoRoute,
+    midwifeTclNcdRoute,
+    midwifeTbCasesRoute,
+    midwifeTbCaseNewRoute,
+    midwifeTbCaseDetailRoute,
+    midwifeReportsRoute,
+    midwifeSummaryTableRoute,
+    midwifeM1ReportRoute,
+    midwifeM2ReportRoute,
+    midwifePidsrRoute,
+    midwifeInventoryRoute,
+    midwifeCatchAllRoute,
+  ]),
+  phnLayoutRoute.addChildren([phnDashboardRoute, phnIntelligenceMapRoute, phnCatchAllRoute]),
   phisLayoutRoute.addChildren([phisDashboardRoute, phisCatchAllRoute]),
-  dsoLayoutRoute.addChildren([dsoDashboardRoute, dsoCatchAllRoute]),
-  choLayoutRoute.addChildren([choDashboardRoute, choCatchAllRoute]),
+  dsoLayoutRoute.addChildren([dsoDashboardRoute, dsoIntelligenceMapRoute, dsoCatchAllRoute]),
+  choLayoutRoute.addChildren([choDashboardRoute, choIntelligenceMapRoute, choCatchAllRoute]),
   adminLayoutRoute.addChildren([
     adminDashboardRoute,
     adminUsersRoute,

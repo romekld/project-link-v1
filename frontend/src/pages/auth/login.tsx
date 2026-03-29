@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
-import { Plus } from 'lucide-react'
+import dasmarinasLogo from '@/assets/dasmarinas-logo.svg'
 import type { UserRole } from '@/types'
 
 const ROLE_ROOTS: Record<UserRole, string> = {
@@ -52,9 +52,7 @@ export function LoginPage() {
       <div className="w-full max-w-sm space-y-6">
         {/* Brand mark */}
         <div className="flex flex-col items-center gap-3 text-center">
-          <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-primary text-primary-foreground shadow-sm">
-            <Plus className="size-6 stroke-[2.5]" />
-          </div>
+          <img src={dasmarinasLogo} alt="Dasmarinas City logo" className="h-24 w-24 object-contain shadow-none" />
           <div>
             <p className="font-heading text-2xl font-bold tracking-tight text-foreground">LINK</p>
             <p className="text-sm text-muted-foreground">Local Information Network for Kalusugan</p>
