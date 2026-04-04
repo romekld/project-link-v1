@@ -1,6 +1,11 @@
 {
   "version": 1,
   "skills": {
+    "ai-image-generation": {
+      "source": "inferen-sh/skills",
+      "sourceType": "github",
+      "computedHash": "9ee6d37669b89f87bb0b1e1f89bf06cca35d69d461786a3fb847b07c4f2c8375"
+    },
     "frontend-design": {
       "source": "anthropics/skills",
       "sourceType": "github",
@@ -11,6 +16,11 @@
       "sourceType": "github",
       "computedHash": "d85881e7b2f6e9c718d45ac9954c1d8e05e21f9b6f3ca58062ae80f89474750b"
     },
+    "mermaid-diagrams": {
+      "source": "softaworks/agent-toolkit",
+      "sourceType": "github",
+      "computedHash": "b6c206a3cab0333a1d3d3cf27114099d0d5f25eb07d86c8f12472b7aa7d59a4c"
+    },
     "shadcn": {
       "source": "shadcn/ui",
       "sourceType": "github",
@@ -20,6 +30,11 @@
       "source": "anthropics/skills",
       "sourceType": "github",
       "computedHash": "57f470f512f45bdac598e302bc72fd62bf2b649fc7fad032efe97720149cde4d"
+    },
+    "storyboard-creation": {
+      "source": "inferen-sh/skills",
+      "sourceType": "github",
+      "computedHash": "f3c39f48278e0cccd55682cdf0754717d35c9dcef3b19ddd60cc0b98884c1699"
     },
     "supabase-postgres-best-practices": {
       "source": "supabase/agent-skills",

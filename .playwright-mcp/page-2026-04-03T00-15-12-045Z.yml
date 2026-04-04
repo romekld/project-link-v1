@@ -1,0 +1,257 @@
+- generic [ref=e2]:
+  - generic [ref=e3]:
+    - generic [ref=e6]:
+      - list [ref=e8]:
+        - listitem [ref=e9]:
+          - button "LINK City Health Office 2" [ref=e10]:
+            - generic [ref=e11]:
+              - img [ref=e13]
+              - generic [ref=e15]:
+                - generic [ref=e16]: LINK
+                - generic [ref=e17]: City Health Office 2
+      - generic [ref=e18]:
+        - generic [ref=e19]:
+          - generic [ref=e20]: Navigation
+          - list [ref=e21]:
+            - listitem [ref=e22]:
+              - link "Dashboard" [ref=e23] [cursor=pointer]:
+                - /url: /admin/dashboard
+                - img [ref=e24]
+                - generic [ref=e29]: Dashboard
+            - listitem [ref=e31]:
+              - button "Users" [expanded] [ref=e32]:
+                - img [ref=e33]
+                - generic [ref=e38]: Users
+                - img [ref=e39]
+              - list [ref=e42]:
+                - listitem [ref=e43]:
+                  - link "User List" [ref=e44] [cursor=pointer]:
+                    - /url: /admin/users
+                - listitem [ref=e45]:
+                  - link "Create User" [ref=e46] [cursor=pointer]:
+                    - /url: /admin/users/new
+            - listitem [ref=e48]:
+              - button "BHS Registry" [ref=e49]:
+                - img [ref=e50]
+                - generic [ref=e54]: BHS Registry
+                - img [ref=e55]
+            - listitem [ref=e57]:
+              - link "Audit Logs" [ref=e58] [cursor=pointer]:
+                - /url: /admin/audit-logs
+                - img [ref=e59]
+                - generic [ref=e65]: Audit Logs
+        - generic [ref=e66]:
+          - generic [ref=e67]: Quick Links
+          - list [ref=e68]:
+            - listitem [ref=e69]:
+              - link "Create User" [ref=e70] [cursor=pointer]:
+                - /url: /admin/users/new
+                - img [ref=e71]
+                - generic [ref=e74]: Create User
+            - listitem [ref=e75]:
+              - link "Coverage Planner" [ref=e76] [cursor=pointer]:
+                - /url: /admin/bhs/coverage
+                - img [ref=e77]
+                - generic [ref=e81]: Coverage Planner
+      - list [ref=e83]:
+        - listitem [ref=e84]:
+          - button "UU User" [ref=e85]:
+            - generic [ref=e87]: UU
+            - generic [ref=e89]: User
+            - img [ref=e90]
+      - button "Toggle Sidebar" [ref=e93]
+    - main [ref=e94]:
+      - generic [ref=e95]:
+        - button "Toggle Sidebar" [ref=e96]:
+          - img
+          - generic [ref=e97]: Toggle Sidebar
+        - separator [ref=e98]
+        - navigation "breadcrumb" [ref=e99]:
+          - list [ref=e100]:
+            - listitem [ref=e101]:
+              - link "Dashboard" [ref=e102] [cursor=pointer]:
+                - /url: /admin/dashboard
+            - listitem [ref=e103]:
+              - img [ref=e104]
+            - listitem [ref=e106]:
+              - link "Users" [disabled] [ref=e107]
+        - generic [ref=e108]:
+          - button "Theme mode" [ref=e109]:
+            - img
+          - button "Open user menu" [ref=e110]:
+            - generic [ref=e112]: UU
+      - generic [ref=e114]:
+        - generic [ref=e115]:
+          - generic [ref=e116]:
+            - heading "Users" [level=1] [ref=e117]
+            - paragraph [ref=e118]: Manage staff accounts, review password state, and keep role assignments clean across all health stations.
+          - button "Create user" [ref=e119] [cursor=pointer]:
+            - img
+            - text: Create user
+        - generic [ref=e120]:
+          - generic [ref=e121]:
+            - generic [ref=e122]:
+              - generic [ref=e123]:
+                - generic [ref=e124]: Total users
+                - generic [ref=e125]: "0"
+              - img [ref=e127]
+            - generic [ref=e132]: All accounts in the system
+          - generic [ref=e133]:
+            - generic [ref=e134]:
+              - generic [ref=e135]:
+                - generic [ref=e136]: Active accounts
+                - generic [ref=e137]: "0"
+              - img [ref=e139]
+            - generic [ref=e141]: Can currently sign in
+          - generic [ref=e142]:
+            - generic [ref=e143]:
+              - generic [ref=e144]:
+                - generic [ref=e145]: Password reminders
+                - generic [ref=e146]: "0"
+              - img [ref=e148]
+            - generic [ref=e151]: Still using a temporary password
+          - generic [ref=e152]:
+            - generic [ref=e153]:
+              - generic [ref=e154]:
+                - generic [ref=e155]: Never signed in
+                - generic [ref=e156]: "0"
+              - img [ref=e158]
+            - generic [ref=e161]: Created but not yet used
+        - generic [ref=e162]:
+          - generic [ref=e164]:
+            - generic [ref=e165]:
+              - img [ref=e166]
+              - textbox "Search by name, user ID, username, or email" [ref=e169]
+            - generic [ref=e170]:
+              - combobox [ref=e171]:
+                - generic [ref=e172]: all
+                - img: ▼
+              - textbox [ref=e173]: all
+              - combobox [ref=e174]:
+                - generic [ref=e175]: all
+                - img: ▼
+              - textbox [ref=e176]: all
+              - combobox [ref=e177]:
+                - generic [ref=e178]: all
+                - img: ▼
+              - textbox [ref=e179]: all
+              - combobox [ref=e180]:
+                - generic [ref=e181]: all
+                - img: ▼
+              - textbox [ref=e182]: all
+              - combobox [ref=e183]:
+                - generic [ref=e184]: all
+                - img: ▼
+              - textbox [ref=e185]: all
+              - button "Clear filters" [ref=e186]
+              - button "Columns" [ref=e187]:
+                - img
+                - text: Columns
+          - table [ref=e190]:
+            - rowgroup [ref=e191]:
+              - row "User User ID Username Role BHS Status Password Last login Updated Actions" [ref=e192]:
+                - columnheader "User" [ref=e193]:
+                  - button "User" [ref=e194]:
+                    - text: User
+                    - img
+                - columnheader "User ID" [ref=e195]:
+                  - button "User ID" [ref=e196]:
+                    - text: User ID
+                    - img
+                - columnheader "Username" [ref=e197]:
+                  - button "Username" [ref=e198]:
+                    - text: Username
+                    - img
+                - columnheader "Role" [ref=e199]:
+                  - button "Role" [ref=e200]:
+                    - text: Role
+                    - img
+                - columnheader "BHS" [ref=e201]:
+                  - button "BHS" [ref=e202]:
+                    - text: BHS
+                    - img
+                - columnheader "Status" [ref=e203]:
+                  - button "Status" [ref=e204]:
+                    - text: Status
+                    - img
+                - columnheader "Password" [ref=e205]:
+                  - button "Password" [ref=e206]:
+                    - text: Password
+                    - img
+                - columnheader "Last login" [ref=e207]:
+                  - button "Last login" [ref=e208]:
+                    - text: Last login
+                    - img
+                - columnheader "Updated" [ref=e209]:
+                  - button "Updated" [ref=e210]:
+                    - text: Updated
+                    - img
+                - columnheader "Actions" [ref=e211]
+            - rowgroup [ref=e212]:
+              - row [ref=e213]:
+                - cell [ref=e214]
+                - cell [ref=e216]
+                - cell [ref=e218]
+                - cell [ref=e220]
+                - cell [ref=e222]
+                - cell [ref=e224]
+                - cell [ref=e226]
+                - cell [ref=e228]
+                - cell [ref=e230]
+                - cell [ref=e232]
+              - row [ref=e234]:
+                - cell [ref=e235]
+                - cell [ref=e237]
+                - cell [ref=e239]
+                - cell [ref=e241]
+                - cell [ref=e243]
+                - cell [ref=e245]
+                - cell [ref=e247]
+                - cell [ref=e249]
+                - cell [ref=e251]
+                - cell [ref=e253]
+              - row [ref=e255]:
+                - cell [ref=e256]
+                - cell [ref=e258]
+                - cell [ref=e260]
+                - cell [ref=e262]
+                - cell [ref=e264]
+                - cell [ref=e266]
+                - cell [ref=e268]
+                - cell [ref=e270]
+                - cell [ref=e272]
+                - cell [ref=e274]
+              - row [ref=e276]:
+                - cell [ref=e277]
+                - cell [ref=e279]
+                - cell [ref=e281]
+                - cell [ref=e283]
+                - cell [ref=e285]
+                - cell [ref=e287]
+                - cell [ref=e289]
+                - cell [ref=e291]
+                - cell [ref=e293]
+                - cell [ref=e295]
+              - row [ref=e297]:
+                - cell [ref=e298]
+                - cell [ref=e300]
+                - cell [ref=e302]
+                - cell [ref=e304]
+                - cell [ref=e306]
+                - cell [ref=e308]
+                - cell [ref=e310]
+                - cell [ref=e312]
+                - cell [ref=e314]
+                - cell [ref=e316]
+              - row [ref=e318]:
+                - cell [ref=e319]
+                - cell [ref=e321]
+                - cell [ref=e323]
+                - cell [ref=e325]
+                - cell [ref=e327]
+                - cell [ref=e329]
+                - cell [ref=e331]
+                - cell [ref=e333]
+                - cell [ref=e335]
+                - cell [ref=e337]
+  - region "Notifications alt+T"
