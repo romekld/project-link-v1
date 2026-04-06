@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { Link } from '@tanstack/react-router'
 import { supabase } from '@/lib/supabase'
+import { DEFAULT_ADMIN_USERS_SEARCH } from '@/pages/admin/users/search'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
@@ -141,7 +142,7 @@ export function AdminDashboardPage() {
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
         <Card className="transition-shadow hover:shadow-sm">
           <CardContent className="pt-5">
-            <Link to="/admin/users" className="group block">
+            <Link to="/admin/users" search={DEFAULT_ADMIN_USERS_SEARCH} className="group block">
               <div className="flex items-start gap-3">
                 <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-primary/10">
                   <Users className="size-4 text-primary" />

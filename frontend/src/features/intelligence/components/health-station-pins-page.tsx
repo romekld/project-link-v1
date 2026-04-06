@@ -2,6 +2,7 @@ import { useEffect, useMemo, useRef, useState } from 'react'
 import { useQuery } from '@tanstack/react-query'
 import type { ColumnDef } from '@tanstack/react-table'
 import type maplibregl from 'maplibre-gl'
+import { useSearch } from '@tanstack/react-router'
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
@@ -20,6 +21,9 @@ import { Skeleton } from '@/components/ui/skeleton'
 import { useSetPageMeta } from '@/contexts/page-context'
 import { env } from '@/config/env'
 import {
+  buildHealthStationPinsFromStationRows,
+  loadCityBarangayRegistryRecords,
+  loadHealthStationManagementRows,
   buildHealthStationPins,
   loadIntelligenceFixtures,
 } from '@/features/intelligence'
@@ -43,6 +47,7 @@ interface HealthStationPinsPageProps {
 
 interface PinMapSurfaceProps {
   fixtures: IntelligenceFixtures
+  pins: HealthStationPinRecord[]
   selectedPin: HealthStationPinRecord | null
   placementMode: boolean
   onPinSelect: (pinId: string) => void
@@ -96,6 +101,7 @@ function LoadingState() {
 
 function PinMapSurface({
   fixtures,
+  pins,
   selectedPin,
   placementMode,
   onPinSelect,
@@ -180,7 +186,8 @@ function PinMapSurface({
       const code = event.features?.[0]?.properties?.ADM4_PCODE as string | undefined
       if (!code) return
 
-      const selectedId = `pin-${code}`
+      const selectedId = pins.find((pin) => pin.barangayCode === code)?.id
+      if (!selectedId) return
       onPinSelect(selectedId)
 
       if (placementMode) {
@@ -200,12 +207,13 @@ function PinMapSurface({
       map.off('mouseleave', 'pin-planner-fill', handleLeave)
       map.off('click', 'pin-planner-fill', handleClick)
     }
-  }, [fixtures, isLoaded, map, onMapPlacement, onPinSelect, placementMode, selectedPin?.barangayCode])
+  }, [fixtures, isLoaded, map, onMapPlacement, onPinSelect, pins, placementMode, selectedPin?.barangayCode])
 
   return null
 }
 
 export function HealthStationPinsPage({ roleScope }: HealthStationPinsPageProps) {
+  const searchParams = useSearch({ strict: false }) as { stationId?: string }
   const [pinOverrides, setPinOverrides] = useState<Record<string, Partial<HealthStationPinRecord>>>({})
   const [selectedPinId, setSelectedPinId] = useState<string | null>(null)
   const [placementMode, setPlacementMode] = useState(false)
@@ -218,15 +226,35 @@ export function HealthStationPinsPage({ roleScope }: HealthStationPinsPageProps)
     queryKey: ['intelligence', 'fixtures'],
     queryFn: loadIntelligenceFixtures,
   })
+  const stationsQuery = useQuery({
+    queryKey: ['intelligence', 'health-stations'],
+    queryFn: loadHealthStationManagementRows,
+  })
+  const cityBarangaysQuery = useQuery({
+    queryKey: ['intelligence', 'city-barangays'],
+    queryFn: loadCityBarangayRegistryRecords,
+  })
 
   useSetPageMeta({
     title: 'Health Station Pins',
-    breadcrumbs: [{ label: roleScope === 'cho' ? 'Intelligence' : 'BHS Registry' }, { label: 'Health Station Pins' }],
+    breadcrumbs: [
+      { label: roleScope === 'cho' ? 'Intelligence' : 'BHS Registry' },
+      { label: 'Health Station Management', href: roleScope === 'cho' ? '/cho/intelligence/stations' : '/admin/bhs/stations' },
+      { label: 'Pins' },
+    ],
   })
 
   const pins = useMemo(
     () => {
-      const basePins = fixturesQuery.data ? buildHealthStationPins(fixturesQuery.data) : []
+      const basePins =
+        stationsQuery.data && cityBarangaysQuery.data
+          ? buildHealthStationPinsFromStationRows(
+              stationsQuery.data.filter((station) => station.isActive),
+              cityBarangaysQuery.data,
+            )
+          : fixturesQuery.data
+            ? buildHealthStationPins(fixturesQuery.data)
+            : []
       return basePins.map((pin) => {
         const override = pinOverrides[pin.id]
         if (!override) return pin
@@ -238,9 +266,9 @@ export function HealthStationPinsPage({ roleScope }: HealthStationPinsPageProps)
         }
       })
     },
-    [fixturesQuery.data, pinOverrides],
+    [cityBarangaysQuery.data, fixturesQuery.data, pinOverrides, stationsQuery.data],
   )
-  const effectiveSelectedPinId = selectedPinId ?? pins[0]?.id ?? null
+  const effectiveSelectedPinId = selectedPinId ?? searchParams.stationId ?? pins[0]?.id ?? null
   const selectedPin = pins.find((pin) => pin.id === effectiveSelectedPinId) ?? null
   const mapStyles = useMemo(
     () => getMapStyles(mapProvider, env.maptilerApiKey),
@@ -299,11 +327,11 @@ export function HealthStationPinsPage({ roleScope }: HealthStationPinsPageProps)
     }))
   }
 
-  if (fixturesQuery.isLoading) {
+  if (fixturesQuery.isLoading || stationsQuery.isLoading || cityBarangaysQuery.isLoading) {
     return <LoadingState />
   }
 
-  if (fixturesQuery.isError || !fixturesQuery.data) {
+  if (fixturesQuery.isError || stationsQuery.isError || cityBarangaysQuery.isError || !fixturesQuery.data) {
     return (
       <Alert variant="destructive">
         <AlertTriangle />
@@ -355,6 +383,7 @@ export function HealthStationPinsPage({ roleScope }: HealthStationPinsPageProps)
                 />
                 <PinMapSurface
                   fixtures={fixturesQuery.data}
+                  pins={pins}
                   selectedPin={selectedPin}
                   placementMode={placementMode}
                   onPinSelect={setSelectedPinId}

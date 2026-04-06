@@ -2,12 +2,13 @@ import { useEffect, useRef, useState } from 'react'
 import type maplibregl from 'maplibre-gl'
 import { MapControls, useMap } from '@/components/ui/map'
 import type { GeoLayerId, IntelligenceFixtures } from '@/features/intelligence/types'
-import { mapColorScale, type MapProvider } from './constants'
+import { mapColorPresets, type MapColorPresetId, type MapProvider } from './constants'
 
 interface MapLayerSurfaceProps {
   fixtures: IntelligenceFixtures
   selectedCode: string | null
   visibleLayers: GeoLayerId[]
+  mapColorPreset: MapColorPresetId
   onSelectCode: (code: string) => void
 }
 
@@ -26,6 +27,24 @@ const LAYER_IDS = {
   heatLayer: 'intelligence-heat-layer',
   heatHotspots: 'intelligence-heat-hotspots',
 } as const
+
+function getChoroplethFillColorExpression(
+  colorScale: [string, string, string, string],
+): maplibregl.ExpressionSpecification {
+  return [
+    'interpolate',
+    ['linear'],
+    ['coalesce', ['get', 'mockCases'], 0],
+    0,
+    colorScale[0],
+    12,
+    colorScale[1],
+    24,
+    colorScale[2],
+    42,
+    colorScale[3],
+  ] as maplibregl.ExpressionSpecification
+}
 
 function ensureSources(map: maplibregl.Map, fixtures: IntelligenceFixtures) {
   if (!map.getSource(SOURCE_IDS.barangays)) {
@@ -50,26 +69,16 @@ function ensureSources(map: maplibregl.Map, fixtures: IntelligenceFixtures) {
   }
 }
 
-function ensureLayers(map: maplibregl.Map) {
+function ensureLayers(map: maplibregl.Map, mapColorPreset: MapColorPresetId) {
+  const colors = mapColorPresets[mapColorPreset]
+
   if (!map.getLayer(LAYER_IDS.barangaysFill)) {
     map.addLayer({
       id: LAYER_IDS.barangaysFill,
       type: 'fill',
       source: SOURCE_IDS.barangays,
       paint: {
-        'fill-color': [
-          'interpolate',
-          ['linear'],
-          ['coalesce', ['get', 'mockCases'], 0],
-          0,
-          mapColorScale[0],
-          12,
-          mapColorScale[1],
-          24,
-          mapColorScale[2],
-          42,
-          mapColorScale[3],
-        ],
+        'fill-color': getChoroplethFillColorExpression(colors.choroplethScale),
         'fill-opacity': [
           'case',
           ['boolean', ['get', 'inCho2Scope'], false],
@@ -86,8 +95,8 @@ function ensureLayers(map: maplibregl.Map) {
       type: 'line',
       source: SOURCE_IDS.barangays,
       paint: {
-        'line-color': '#0f172a',
-        'line-opacity': 0.18,
+        'line-color': colors.dasmarinasOutlineColor,
+        'line-opacity': colors.dasmarinasOutlineOpacity,
         'line-width': 1,
       },
     })
@@ -100,7 +109,7 @@ function ensureLayers(map: maplibregl.Map) {
       source: SOURCE_IDS.barangays,
       filter: ['==', ['get', 'ADM4_PCODE'], ''],
       paint: {
-        'line-color': '#14532d',
+        'line-color': colors.hoverOutlineColor,
         'line-width': 2.25,
       },
     })
@@ -113,7 +122,7 @@ function ensureLayers(map: maplibregl.Map) {
       source: SOURCE_IDS.barangays,
       filter: ['==', ['get', 'ADM4_PCODE'], ''],
       paint: {
-        'line-color': '#f97316',
+        'line-color': colors.selectedOutlineColor,
         'line-width': 3,
       },
     })
@@ -125,7 +134,7 @@ function ensureLayers(map: maplibregl.Map) {
       type: 'line',
       source: SOURCE_IDS.cho2,
       paint: {
-        'line-color': '#0f766e',
+        'line-color': colors.cho2OutlineColor,
         'line-width': 2,
         'line-opacity': 0.9,
       },
@@ -278,16 +287,42 @@ function setLayerVisibility(map: maplibregl.Map, layerId: string, visibility: 'v
 
 function syncLayerVisibility(map: maplibregl.Map, visibleLayers: GeoLayerId[]) {
   const choroplethVisibility = visibleLayers.includes('choropleth') ? 'visible' : 'none'
-  const scopeVisibility = visibleLayers.includes('scope') ? 'visible' : 'none'
+  const dasmarinasBoundaryVisibility = visibleLayers.includes('dasmarinasBoundaries') ? 'visible' : 'none'
+  const cho2BoundaryVisibility = visibleLayers.includes('cho2Boundaries') ? 'visible' : 'none'
   const heatVisibility = visibleLayers.includes('diseaseHeat') ? 'visible' : 'none'
 
   setLayerVisibility(map, LAYER_IDS.barangaysFill, choroplethVisibility)
-  setLayerVisibility(map, LAYER_IDS.barangaysOutline, choroplethVisibility)
+  setLayerVisibility(map, LAYER_IDS.barangaysOutline, dasmarinasBoundaryVisibility)
   setLayerVisibility(map, LAYER_IDS.hoverOutline, choroplethVisibility)
   setLayerVisibility(map, LAYER_IDS.selectedOutline, choroplethVisibility)
-  setLayerVisibility(map, LAYER_IDS.cho2Outline, scopeVisibility)
+  setLayerVisibility(map, LAYER_IDS.cho2Outline, cho2BoundaryVisibility)
   setLayerVisibility(map, LAYER_IDS.heatLayer, heatVisibility)
   setLayerVisibility(map, LAYER_IDS.heatHotspots, heatVisibility)
+}
+
+function syncLayerColors(map: maplibregl.Map, mapColorPreset: MapColorPresetId) {
+  const colors = mapColorPresets[mapColorPreset]
+
+  if (map.getLayer(LAYER_IDS.barangaysFill)) {
+    map.setPaintProperty(LAYER_IDS.barangaysFill, 'fill-color', getChoroplethFillColorExpression(colors.choroplethScale))
+  }
+
+  if (map.getLayer(LAYER_IDS.barangaysOutline)) {
+    map.setPaintProperty(LAYER_IDS.barangaysOutline, 'line-color', colors.dasmarinasOutlineColor)
+    map.setPaintProperty(LAYER_IDS.barangaysOutline, 'line-opacity', colors.dasmarinasOutlineOpacity)
+  }
+
+  if (map.getLayer(LAYER_IDS.hoverOutline)) {
+    map.setPaintProperty(LAYER_IDS.hoverOutline, 'line-color', colors.hoverOutlineColor)
+  }
+
+  if (map.getLayer(LAYER_IDS.selectedOutline)) {
+    map.setPaintProperty(LAYER_IDS.selectedOutline, 'line-color', colors.selectedOutlineColor)
+  }
+
+  if (map.getLayer(LAYER_IDS.cho2Outline)) {
+    map.setPaintProperty(LAYER_IDS.cho2Outline, 'line-color', colors.cho2OutlineColor)
+  }
 }
 
 function syncSelectionFilters(map: maplibregl.Map, hoveredCode: string | null, selectedCode: string | null) {
@@ -318,7 +353,13 @@ export function MapProviderControls({ mapProvider, onProviderChange }: ProviderC
   )
 }
 
-export function MapLayerSurface({ fixtures, selectedCode, visibleLayers, onSelectCode }: MapLayerSurfaceProps) {
+export function MapLayerSurface({
+  fixtures,
+  selectedCode,
+  visibleLayers,
+  mapColorPreset,
+  onSelectCode,
+}: MapLayerSurfaceProps) {
   const { map, isLoaded } = useMap()
   const hasFitToBounds = useRef(false)
   const [hoveredCode, setHoveredCode] = useState<string | null>(null)
@@ -329,7 +370,7 @@ export function MapLayerSurface({ fixtures, selectedCode, visibleLayers, onSelec
     }
 
     ensureSources(map, fixtures)
-    ensureLayers(map)
+    ensureLayers(map, mapColorPreset)
     syncSourceData(map, fixtures)
 
     if (!hasFitToBounds.current) {
@@ -340,7 +381,7 @@ export function MapLayerSurface({ fixtures, selectedCode, visibleLayers, onSelec
       })
       map.zoomTo(map.getZoom() + 0.25, { duration: 0 })
     }
-  }, [fixtures, isLoaded, map])
+  }, [fixtures, isLoaded, map, mapColorPreset])
 
   useEffect(() => {
     if (!map || !isLoaded) {
@@ -349,6 +390,14 @@ export function MapLayerSurface({ fixtures, selectedCode, visibleLayers, onSelec
 
     syncLayerVisibility(map, visibleLayers)
   }, [isLoaded, map, visibleLayers])
+
+  useEffect(() => {
+    if (!map || !isLoaded) {
+      return
+    }
+
+    syncLayerColors(map, mapColorPreset)
+  }, [isLoaded, map, mapColorPreset])
 
   useEffect(() => {
     if (!map || !isLoaded) {

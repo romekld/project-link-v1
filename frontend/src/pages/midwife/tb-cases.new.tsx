@@ -33,6 +33,7 @@ export function MidwifeNewTbCasePage() {
       { label: 'NTP Registry', href: '/midwife/tb-cases' },
       { label: 'New TB Case' },
     ],
+    showTitle: false,
   })
 
   const [patientDialogOpen, setPatientDialogOpen] = useState(false)

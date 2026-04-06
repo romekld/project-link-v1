@@ -1,4 +1,8 @@
 {
+  "statusLine": {
+    "type": "command",
+    "command": "bash \"D:/project-link/.claude/statusline-command.sh\""
+  },
   "enabledPlugins": {
     "claude-mem@thedotmack": true,
     "context7@claude-plugins-official": true,
@@ -7,6 +11,10 @@
     "claude-md-management@claude-plugins-official": true,
     "claude-code-setup@claude-plugins-official": true,
     "compound-engineering@compound-engineering-plugin": true,
-    "document-skills@anthropic-agent-skills": true
+    "document-skills@anthropic-agent-skills": true,
+    "superpowers@claude-plugins-official": true,
+    "code-simplifier@claude-plugins-official": true,
+    "supabase@claude-plugins-official": true,
+    "vercel@claude-plugins-official": true
   }
 }

@@ -28,6 +28,7 @@ export function MidwifeTbCasesPage() {
   useSetPageMeta({
     title: 'NTP Registry',
     breadcrumbs: [{ label: 'NTP Registry' }],
+    showTitle: false,
   })
 
   const isMobile = useIsMobile()

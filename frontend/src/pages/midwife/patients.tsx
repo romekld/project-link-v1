@@ -18,6 +18,7 @@ export function MidwifePatientsPage() {
   useSetPageMeta({
     title: 'Patients',
     breadcrumbs: [{ label: 'Patients' }],
+    showTitle: false,
   })
 
   const isMobile = useIsMobile()

@@ -1,0 +1,268 @@
+- generic [ref=e2]:
+  - generic [ref=e3]:
+    - generic [ref=e6]:
+      - list [ref=e8]:
+        - listitem [ref=e9]:
+          - button "LINK City Health Office 2" [ref=e10]:
+            - generic [ref=e11]:
+              - img [ref=e13]
+              - generic [ref=e15]:
+                - generic [ref=e16]: LINK
+                - generic [ref=e17]: City Health Office 2
+      - generic [ref=e18]:
+        - generic [ref=e19]:
+          - generic [ref=e20]: Navigation
+          - list [ref=e21]:
+            - listitem [ref=e22]:
+              - link "Dashboard" [ref=e23] [cursor=pointer]:
+                - /url: /admin/dashboard
+                - img [ref=e24]
+                - generic [ref=e29]: Dashboard
+            - listitem [ref=e31]:
+              - button "Users" [expanded] [ref=e32]:
+                - img [ref=e33]
+                - generic [ref=e38]: Users
+                - img [ref=e39]
+              - list [ref=e42]:
+                - listitem [ref=e43]:
+                  - link "User List" [ref=e44] [cursor=pointer]:
+                    - /url: /admin/users
+                - listitem [ref=e45]:
+                  - link "Create User" [ref=e46] [cursor=pointer]:
+                    - /url: /admin/users/new
+            - listitem [ref=e48]:
+              - button "BHS Registry" [ref=e49]:
+                - img [ref=e50]
+                - generic [ref=e54]: BHS Registry
+                - img [ref=e55]
+            - listitem [ref=e57]:
+              - link "Audit Logs" [ref=e58] [cursor=pointer]:
+                - /url: /admin/audit-logs
+                - img [ref=e59]
+                - generic [ref=e65]: Audit Logs
+        - generic [ref=e66]:
+          - generic [ref=e67]: Quick Links
+          - list [ref=e68]:
+            - listitem [ref=e69]:
+              - link "Create User" [ref=e70] [cursor=pointer]:
+                - /url: /admin/users/new
+                - img [ref=e71]
+                - generic [ref=e74]: Create User
+            - listitem [ref=e75]:
+              - link "Coverage Planner" [ref=e76] [cursor=pointer]:
+                - /url: /admin/bhs/coverage
+                - img [ref=e77]
+                - generic [ref=e81]: Coverage Planner
+      - list [ref=e83]:
+        - listitem [ref=e84]:
+          - button "UU User" [ref=e85]:
+            - generic [ref=e87]: UU
+            - generic [ref=e89]: User
+            - img [ref=e90]
+      - button "Toggle Sidebar" [ref=e93]
+    - main [ref=e94]:
+      - generic [ref=e95]:
+        - button "Toggle Sidebar" [ref=e96]:
+          - img
+          - generic [ref=e97]: Toggle Sidebar
+        - separator [ref=e98]
+        - navigation "breadcrumb" [ref=e99]:
+          - list [ref=e100]:
+            - listitem [ref=e101]:
+              - link "Dashboard" [ref=e102] [cursor=pointer]:
+                - /url: /admin/dashboard
+            - listitem [ref=e103]:
+              - img [ref=e104]
+            - listitem [ref=e106]:
+              - link "Users" [ref=e107] [cursor=pointer]:
+                - /url: /admin/users
+            - listitem [ref=e108]:
+              - img [ref=e109]
+            - listitem [ref=e111]:
+              - link "Create User" [disabled] [ref=e112]
+        - generic [ref=e113]:
+          - button "Theme mode" [ref=e114]:
+            - img
+          - button "Open user menu" [ref=e115]:
+            - generic [ref=e117]: UU
+      - generic [ref=e119]:
+        - button "Back to Users" [ref=e121] [cursor=pointer]:
+          - img
+          - text: Back to Users
+        - generic [ref=e122]:
+          - heading "Create User" [level=1] [ref=e123]
+          - paragraph [ref=e124]: Provision a new staff account with normalized profile fields, role scoping, and optional profile photo support.
+        - generic [ref=e126]:
+          - generic [ref=e127]:
+            - generic [ref=e128]:
+              - generic [ref=e129]:
+                - generic [ref=e130]: Identity
+                - generic [ref=e131]: Use normalized name fields so staff records stay searchable and consistent.
+              - generic [ref=e133]:
+                - group [ref=e134]:
+                  - generic [ref=e135]: First name
+                  - textbox "First name" [ref=e136]
+                - group [ref=e137]:
+                  - generic [ref=e138]: Middle name
+                  - textbox "Middle name" [ref=e139]
+                  - paragraph [ref=e140]: Optional.
+                - group [ref=e141]:
+                  - generic [ref=e142]: Last name
+                  - textbox "Last name" [ref=e143]
+                - group [ref=e144]:
+                  - generic [ref=e145]: Name suffix
+                  - textbox "Name suffix" [ref=e146]:
+                    - /placeholder: Jr., Sr., III
+                  - paragraph [ref=e147]: Optional.
+                - group [ref=e148]:
+                  - generic [ref=e149]: Date of birth
+                  - button "Date of birth" [ref=e150]:
+                    - img
+                    - generic [ref=e151]: Pick a date
+                - group [ref=e152]:
+                  - generic [ref=e153]: Sex
+                  - combobox "Sex" [ref=e154]:
+                    - generic [ref=e155]: Select sex
+                    - img: ▼
+                  - textbox [ref=e156]
+            - generic [ref=e157]:
+              - generic [ref=e158]:
+                - generic [ref=e159]: Contact
+                - generic [ref=e160]: Email stays aligned with the auth login. Mobile numbers should use Philippine format.
+              - generic [ref=e162]:
+                - group [ref=e163]:
+                  - generic [ref=e164]: Official email
+                  - textbox "Official email" [ref=e165]
+                  - paragraph [ref=e166]: Used for sign-in and admin alerts.
+                - group [ref=e167]:
+                  - generic [ref=e168]: Mobile number
+                  - textbox "Mobile number" [ref=e169]:
+                    - /placeholder: "+639171234567"
+                  - paragraph [ref=e170]: Recommended for field roles.
+                - group [ref=e171]:
+                  - generic [ref=e172]: Alternate mobile number
+                  - textbox "Alternate mobile number" [ref=e173]:
+                    - /placeholder: "+639171234567"
+                  - paragraph [ref=e174]: Optional backup contact.
+            - generic [ref=e175]:
+              - generic [ref=e176]:
+                - generic [ref=e177]: Role and access
+                - generic [ref=e178]: Role drives app access and whether the account should be city-wide or station-scoped.
+              - generic [ref=e180]:
+                - group [ref=e181]:
+                  - generic [ref=e182]: User ID
+                  - textbox "User ID" [disabled]:
+                    - /placeholder: Generated automatically after account creation
+                  - paragraph [ref=e183]: Generated automatically after the account is created.
+                - group [ref=e184]:
+                  - generic [ref=e185]: Username
+                  - textbox "Username" [ref=e186]:
+                    - /placeholder: e.g. a.delacruz
+                  - paragraph [ref=e187]: Suggested from first and last name, but editable.
+                - group [ref=e188]:
+                  - generic [ref=e189]: Role
+                  - combobox "Role" [ref=e190]:
+                    - generic [ref=e191]: Select a role
+                    - img: ▼
+                  - textbox [ref=e192]
+                - group [ref=e193]:
+                  - generic [ref=e194]: Initial password
+                  - textbox "Initial password" [ref=e195]:
+                    - /placeholder: Minimum 12 characters
+                  - paragraph [ref=e196]: The user can skip the reminder dialog, but the pending flag stays visible to admins.
+            - generic [ref=e197]:
+              - generic [ref=e198]:
+                - generic [ref=e199]: Assignment and coverage
+                - generic [ref=e200]: Scope the account carefully so barangay-level roles only see the right records.
+              - generic [ref=e202]:
+                - group [ref=e203]:
+                  - generic [ref=e204]: BHS assignment
+                  - combobox "BHS assignment" [disabled] [ref=e205]:
+                    - generic [ref=e206]: none
+                    - img: ▼
+                  - textbox [ref=e207]: none
+                - group [ref=e208]:
+                  - generic [ref=e209]: Purok assignment
+                  - textbox "Purok assignment" [disabled]:
+                    - /placeholder: Not used for this role
+                  - paragraph [ref=e210]: Visible only for BHW accounts.
+                - group [ref=e211]:
+                  - generic [ref=e212]: Coverage notes
+                  - textbox "Coverage notes" [ref=e213]:
+                    - /placeholder: "Example: Handles puroks 1 to 3 during outreach days."
+                  - paragraph [ref=e214]: Operational notes visible to authorized supervisors and admins.
+            - generic [ref=e215]:
+              - generic [ref=e216]:
+                - generic [ref=e217]: Admin notes
+                - generic [ref=e218]: Private notes for system administrators only.
+              - group [ref=e221]:
+                - generic [ref=e222]: Internal notes
+                - textbox "Internal notes" [ref=e223]:
+                  - /placeholder: "Example: Uses shared station laptop on Tuesdays; verify mobile number next onboarding review."
+            - generic [ref=e224]:
+              - button "Create user" [ref=e225]
+              - button "Back to users" [ref=e226]
+          - generic [ref=e227]:
+            - generic [ref=e228]:
+              - generic [ref=e229]:
+                - generic [ref=e230]: Profile photo
+                - generic [ref=e231]: Optional, but helpful for recognition and safer account selection.
+              - generic [ref=e232]:
+                - generic [ref=e233]:
+                  - generic [ref=e235]: NU
+                  - generic [ref=e236]:
+                    - generic [ref=e237]:
+                      - button "Upload photo" [ref=e238]
+                      - button "Upload photo" [ref=e239]:
+                        - img
+                        - text: Upload photo
+                    - button "Remove photo" [disabled]:
+                      - img
+                      - text: Remove photo
+                - paragraph [ref=e240]: Private storage, max 2 MB, JPG/PNG/WEBP only. Initials stay visible whenever no photo is set.
+            - generic [ref=e241]:
+              - generic [ref=e242]:
+                - generic [ref=e243]: Account summary
+                - generic [ref=e244]: New User
+              - generic [ref=e245]:
+                - generic [ref=e246]:
+                  - generic [ref=e247]: Role
+                  - generic [ref=e248]: Choose a role
+                - generic [ref=e249]:
+                  - generic [ref=e250]: User ID
+                  - generic [ref=e251]: Generated after create
+                - generic [ref=e252]:
+                  - generic [ref=e253]: Username
+                  - generic [ref=e254]: Will be used in audit logs
+                - generic [ref=e255]:
+                  - generic [ref=e256]: Scope
+                  - generic [ref=e257]: City-wide
+                - generic [ref=e258]:
+                  - generic [ref=e259]: Password state
+                  - generic [ref=e260]: Reminder active
+                - generic [ref=e261]:
+                  - generic [ref=e262]: Account status
+                  - generic [ref=e263]: Active
+            - generic [ref=e264]:
+              - generic [ref=e265]:
+                - generic [ref=e266]: Role access
+                - generic [ref=e267]: Select a role to preview its operational footprint.
+              - paragraph [ref=e269]: Role-specific access notes will appear here once a role is selected.
+            - generic [ref=e270]:
+              - generic [ref=e271]:
+                - generic [ref=e272]: Account activity
+                - generic [ref=e273]: Useful for auditing and admin follow-up.
+              - generic [ref=e274]:
+                - generic [ref=e275]:
+                  - generic [ref=e276]: Created
+                  - generic [ref=e277]: Not recorded
+                - generic [ref=e278]:
+                  - generic [ref=e279]: Last updated
+                  - generic [ref=e280]: Not recorded
+                - generic [ref=e281]:
+                  - generic [ref=e282]: Last login
+                  - generic [ref=e283]: Not recorded
+                - generic [ref=e284]:
+                  - generic [ref=e285]: Password changed
+                  - generic [ref=e286]: Not recorded
+  - region "Notifications alt+T"

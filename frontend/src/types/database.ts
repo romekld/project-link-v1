@@ -21,23 +21,44 @@ export type UserRole =
 export interface HealthStation {
   id: string
   barangay_id: string | null
+  physical_city_barangay_id: string | null
   name: string
+  facility_type: 'BHS' | 'BHC' | 'HEALTH_CENTER' | 'OTHER'
   address: string | null
+  is_active: boolean
+  deactivated_at: string | null
+  notes: string | null
   created_at: string
+  updated_at: string | null
 }
 
 export interface UserProfile {
   id: string
-  full_name: string
+  user_id: string
+  first_name: string
+  middle_name: string | null
+  last_name: string
+  name_suffix: string | null
+  email: string
   username: string
   date_of_birth: string
   sex: 'M' | 'F'
   mobile_number: string | null
+  alternate_mobile_number: string | null
   role: UserRole
   health_station_id: string | null
   purok_assignment: string | null
+  coverage_notes: string | null
+  admin_notes: string | null
   is_active: boolean
   must_change_password: boolean
+  last_login_at: string | null
+  password_changed_at: string | null
+  deactivation_reason: string | null
+  profile_photo_path: string | null
+  profile_photo_updated_at: string | null
+  created_by: string | null
+  updated_by: string | null
   created_at: string
   updated_at: string | null
 }

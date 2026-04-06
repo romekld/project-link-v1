@@ -2,7 +2,7 @@ import type { Feature, FeatureCollection, MultiPolygon, Point, Polygon } from 'g
 
 export type MapRoleView = 'phn' | 'dso' | 'cho'
 
-export type GeoLayerId = 'choropleth' | 'scope' | 'diseaseHeat'
+export type GeoLayerId = 'choropleth' | 'dasmarinasBoundaries' | 'cho2Boundaries' | 'diseaseHeat'
 
 export interface BoundaryFeatureProperties {
   fid: number
@@ -61,6 +61,15 @@ export interface BarangaySnapshot {
 
 export type CoveragePendingAction = 'add' | 'remove'
 
+export type HealthStationFacilityType = 'BHS' | 'BHC' | 'HEALTH_CENTER' | 'OTHER'
+
+export const HEALTH_STATION_FACILITY_LABELS: Record<HealthStationFacilityType, string> = {
+  BHS: 'Barangay Health Station',
+  BHC: 'Barangay Health Center',
+  HEALTH_CENTER: 'Health Center',
+  OTHER: 'Other',
+}
+
 export interface CoveragePlannerRecord {
   barangayId: string
   coverageBarangayId?: string | null
@@ -91,12 +100,83 @@ export type HealthStationPinStatus = 'saved' | 'updated'
 export interface HealthStationPinRecord {
   id: string
   stationName: string
+  facilityType?: HealthStationFacilityType
+  physicalCityBarangayId?: string | null
   barangayCode: string
   barangayName: string
   latitude: number
   longitude: number
   isPrimary: boolean
   draftStatus: HealthStationPinStatus
+}
+
+export interface HealthStationManagementRecord {
+  id: string
+  name: string
+  facilityType: HealthStationFacilityType
+  physicalCityBarangayId: string
+  physicalBarangayName: string
+  address: string | null
+  isActive: boolean
+  notes: string | null
+  coveredBarangaysCount: number
+  primaryAssignmentsCount: number
+  crossBarangayAssignmentCount: number
+  createdAt: string
+  updatedAt: string | null
+}
+
+export interface HealthStationCoverageRecord {
+  id: string
+  healthStationId: string
+  healthStationName: string
+  barangayId: string
+  barangayName: string
+  barangayCode: string
+  cityBarangayId: string
+  cityBarangayName: string
+  isPrimary: boolean
+  isActive: boolean
+  notes: string | null
+}
+
+export interface HealthStationBarangayOption {
+  barangayId: string
+  cityBarangayId: string
+  barangayName: string
+  barangayCode: string
+}
+
+export interface CityBarangayOption {
+  barangayId: string
+  barangayName: string
+  barangayCode: string
+}
+
+export interface HealthStationFormCoverageDraft {
+  barangayId: string
+  barangayName: string
+  barangayCode: string
+  isPrimary: boolean
+  isActive: boolean
+  notes: string
+}
+
+export interface HealthStationFormDraft {
+  stationId: string | null
+  name: string
+  facilityType: HealthStationFacilityType
+  physicalCityBarangayId: string
+  address: string
+  notes: string
+  isActive: boolean
+  coverage: HealthStationFormCoverageDraft[]
+}
+
+export interface HealthStationImpactPreview {
+  barangaysLosingPrimary: Array<{ barangayId: string; barangayName: string }>
+  barangaysGainingPrimary: Array<{ barangayId: string; barangayName: string }>
+  barangaysWithoutPrimaryAfterSave: Array<{ barangayId: string; barangayName: string }>
 }
 
 export interface CityBarangayRegistryRecord {

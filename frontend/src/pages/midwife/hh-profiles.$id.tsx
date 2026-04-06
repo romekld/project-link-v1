@@ -32,6 +32,7 @@ export function MidwifeHouseholdSubmissionPage() {
       { label: 'HH Profiles', href: '/midwife/hh-profiles' },
       { label: submission?.householdNumber ?? 'Review' },
     ],
+    showTitle: false,
   })
 
   if (!submission) {

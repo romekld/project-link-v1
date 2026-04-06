@@ -14,7 +14,9 @@
       "Bash(python -c \":*)",
       "Bash(python -u:*)",
       "Bash(python docs/research/fhsis_mop/_extract.py)",
-      "Bash(wc -l /d/project-link/supabase/migrations/*.sql)"
+      "Bash(wc -l /d/project-link/supabase/migrations/*.sql)",
+      "Bash(npx shadcn@latest add sidebar --overwrite)",
+      "Bash(npm run:*)"
     ]
   },
   "enabledPlugins": {

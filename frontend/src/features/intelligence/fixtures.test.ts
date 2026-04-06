@@ -103,7 +103,12 @@ describe('buildIntelligenceFixtures', () => {
 
 describe('getAvailableLayersForRole', () => {
   it('limits dso controls to disease-focused layers', () => {
-    expect(getAvailableLayersForRole('dso')).toEqual(['scope', 'diseaseHeat'])
-    expect(getAvailableLayersForRole('phn')).toEqual(['choropleth', 'scope', 'diseaseHeat'])
+    expect(getAvailableLayersForRole('dso')).toEqual(['cho2Boundaries', 'dasmarinasBoundaries', 'diseaseHeat'])
+    expect(getAvailableLayersForRole('phn')).toEqual([
+      'choropleth',
+      'cho2Boundaries',
+      'dasmarinasBoundaries',
+      'diseaseHeat',
+    ])
   })
 })

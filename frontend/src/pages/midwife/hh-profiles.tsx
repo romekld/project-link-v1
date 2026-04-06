@@ -25,6 +25,7 @@ export function MidwifeHouseholdProfilesPage() {
   useSetPageMeta({
     title: 'HH Profiles',
     breadcrumbs: [{ label: 'HH Profiles' }],
+    showTitle: false,
   })
 
   const isMobile = useIsMobile()

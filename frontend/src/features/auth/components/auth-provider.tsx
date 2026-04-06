@@ -45,6 +45,19 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     return () => subscription.unsubscribe()
   }, [])
 
+  useEffect(() => {
+    if (env.disableAuth || !session?.access_token) {
+      return
+    }
+
+    void supabase.functions.invoke('record-last-login', {
+      headers: {
+        Authorization: `Bearer ${session.access_token}`,
+        apikey: env.supabaseAnonKey,
+      },
+    })
+  }, [session?.access_token])
+
   const role = env.disableAuth ? DEV_ROLE : (session?.user?.app_metadata?.role as UserRole) ?? null
   const healthStationId = env.disableAuth ? null : (session?.user?.app_metadata?.health_station_id as string) ?? null
   const mustChangePassword = env.disableAuth ? false : session?.user?.app_metadata?.must_change_password === true

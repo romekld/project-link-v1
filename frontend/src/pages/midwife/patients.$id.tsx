@@ -31,6 +31,7 @@ export function MidwifePatientDetailPage() {
       { label: 'Patients', href: '/midwife/patients' },
       { label: patient ? `${patient.last_name}, ${patient.first_name}` : id },
     ],
+    showTitle: false,
   })
 
   if (!patient) {

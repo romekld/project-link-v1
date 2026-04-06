@@ -47,6 +47,7 @@ export function MidwifeValidationQueuePage() {
   useSetPageMeta({
     title: 'Validation Queue',
     breadcrumbs: [{ label: 'Validation Queue' }],
+    showTitle: false,
   })
 
   const isMobile = useIsMobile()

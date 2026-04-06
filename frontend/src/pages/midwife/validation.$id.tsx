@@ -50,6 +50,7 @@ export function MidwifeValidationRecordPage() {
       { label: 'Validation Queue', href: '/midwife/validation' },
       { label: record?.patientName ?? 'Record' },
     ],
+    showTitle: false,
   })
 
   if (!record) {
