@@ -6,24 +6,35 @@ import {
   DropdownMenuGroup,
   DropdownMenuItem,
   DropdownMenuLabel,
+  DropdownMenuRadioGroup,
+  DropdownMenuRadioItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 import type { GeoLayerId } from '@/features/intelligence/types'
-import { getLayerIcon, layerLabels } from './constants'
-import { RotateCcw, Settings } from 'lucide-react'
+import {
+  getLayerIcon,
+  layerLabels,
+  mapColorPresetOptions,
+  type MapColorPresetId,
+} from './constants'
+import { Palette, RotateCcw, Settings } from 'lucide-react'
 
 interface LayerMenuProps {
   availableLayers: GeoLayerId[]
   effectiveVisibleLayers: GeoLayerId[]
+  mapColorPreset: MapColorPresetId
   onToggleLayer: (layerId: GeoLayerId) => void
+  onMapColorPresetChange: (preset: MapColorPresetId) => void
   onReset: () => void
 }
 
 export function LayerMenu({
   availableLayers,
   effectiveVisibleLayers,
+  mapColorPreset,
   onToggleLayer,
+  onMapColorPresetChange,
   onReset,
 }: LayerMenuProps) {
   return (
@@ -66,6 +77,21 @@ export function LayerMenu({
               </DropdownMenuCheckboxItem>
             )
           })}
+          <DropdownMenuSeparator />
+        </DropdownMenuGroup>
+        <DropdownMenuGroup>
+          <DropdownMenuLabel>Color style</DropdownMenuLabel>
+          <DropdownMenuRadioGroup
+            value={mapColorPreset}
+            onValueChange={(value) => onMapColorPresetChange(value as MapColorPresetId)}
+          >
+            {mapColorPresetOptions.map((preset) => (
+              <DropdownMenuRadioItem key={preset.id} value={preset.id}>
+                <Palette className="size-4 text-muted-foreground" />
+                <span>{preset.label}</span>
+              </DropdownMenuRadioItem>
+            ))}
+          </DropdownMenuRadioGroup>
           <DropdownMenuSeparator />
         </DropdownMenuGroup>
         <DropdownMenuItem onSelect={onReset}>

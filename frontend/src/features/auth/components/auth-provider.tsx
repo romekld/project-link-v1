@@ -2,6 +2,7 @@ import { createContext, useEffect, useState, type ReactNode } from 'react'
 import type { Session } from '@supabase/supabase-js'
 import { supabase } from '@/lib/supabase'
 import { env } from '@/config/env'
+import { getSupabaseFunctionHeaders } from '@/lib/supabase-function-headers'
 import type { UserRole } from '@/types'
 import { ChangePasswordDialog } from './change-password-dialog'
 
@@ -44,6 +45,18 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
     return () => subscription.unsubscribe()
   }, [])
+
+  useEffect(() => {
+    if (env.disableAuth || !session?.access_token) {
+      return
+    }
+
+    getSupabaseFunctionHeaders()
+      .then((headers) => supabase.functions.invoke('record-last-login', { headers }))
+      .catch(() => {
+        // Non-critical — failure to record last login should not block the session.
+      })
+  }, [session?.access_token])
 
   const role = env.disableAuth ? DEV_ROLE : (session?.user?.app_metadata?.role as UserRole) ?? null
   const healthStationId = env.disableAuth ? null : (session?.user?.app_metadata?.health_station_id as string) ?? null

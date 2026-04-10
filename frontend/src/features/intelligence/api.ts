@@ -4,8 +4,13 @@ import type {
   CityBarangayGeometryVersion,
   CityBarangayImportItem,
   CityBarangayImportJob,
+  CityBarangayOption,
   CityBarangayRegistryRecord,
   CoverageMapViewRow,
+  HealthStationBarangayOption,
+  HealthStationCoverageRecord,
+  HealthStationImpactPreview,
+  HealthStationManagementRecord,
 } from './types'
 
 interface CoverageApplyInput {
@@ -205,6 +210,23 @@ export async function loadCityBarangayRegistryRecords() {
   }).filter((row) => row.geometry) as CityBarangayRegistryRecord[]
 }
 
+export async function loadCityBarangayOptions() {
+  const { data, error } = await supabase
+    .from('city_barangays')
+    .select('id, name, pcode')
+    .order('name')
+
+  if (error) {
+    throw new Error(error.message)
+  }
+
+  return (data ?? []).map((row) => ({
+    barangayId: row.id,
+    barangayName: row.name,
+    barangayCode: row.pcode,
+  })) as CityBarangayOption[]
+}
+
 export async function loadCityBarangayGeometryHistory(cityBarangayId: string) {
   const { data, error } = await supabase
     .from('city_barangay_geometry_versions')
@@ -279,6 +301,197 @@ export async function commitCityBarangayImport(
 
   if (error || data?.error) {
     throw new Error(error?.message ?? data?.error?.message ?? data?.error ?? 'Unable to commit GeoJSON import.')
+  }
+
+  return data?.data ?? data
+}
+
+export async function loadHealthStationManagementRows() {
+  const { data, error } = await supabase
+    .from('health_station_management_view')
+    .select('id, name, facility_type, physical_city_barangay_id, physical_barangay_name, address, is_active, notes, covered_barangays_count, primary_assignments_count, cross_barangay_assignment_count, created_at, updated_at')
+    .order('name')
+
+  if (error) {
+    throw new Error(error.message)
+  }
+
+  return (data ?? []).map((row) => ({
+    id: row.id,
+    name: row.name,
+    facilityType: row.facility_type,
+    physicalCityBarangayId: row.physical_city_barangay_id,
+    physicalBarangayName: row.physical_barangay_name,
+    address: row.address,
+    isActive: row.is_active,
+    notes: row.notes,
+    coveredBarangaysCount: row.covered_barangays_count,
+    primaryAssignmentsCount: row.primary_assignments_count,
+    crossBarangayAssignmentCount: row.cross_barangay_assignment_count,
+    createdAt: row.created_at,
+    updatedAt: row.updated_at,
+  })) as HealthStationManagementRecord[]
+}
+
+export async function loadOperationalBarangayOptions() {
+  const { data, error } = await supabase
+    .from('barangays')
+    .select('id, name, pcode, city_barangay_id, is_active')
+    .eq('is_active', true)
+    .order('name')
+
+  if (error) {
+    throw new Error(error.message)
+  }
+
+  return (data ?? []).map((row) => ({
+    barangayId: row.id,
+    cityBarangayId: row.city_barangay_id,
+    barangayName: row.name,
+    barangayCode: row.pcode,
+  })) as HealthStationBarangayOption[]
+}
+
+export async function loadHealthStationCoverageRows() {
+  const { data, error } = await supabase
+    .from('health_station_coverage_view')
+    .select('id, health_station_id, health_station_name, barangay_id, barangay_name, barangay_code, city_barangay_id, city_barangay_name, is_primary, is_active, notes')
+    .order('health_station_name')
+    .order('barangay_name')
+
+  if (error) {
+    throw new Error(error.message)
+  }
+
+  return (data ?? []).map((row) => ({
+    id: row.id,
+    healthStationId: row.health_station_id,
+    healthStationName: row.health_station_name,
+    barangayId: row.barangay_id,
+    barangayName: row.barangay_name,
+    barangayCode: row.barangay_code,
+    cityBarangayId: row.city_barangay_id,
+    cityBarangayName: row.city_barangay_name,
+    isPrimary: row.is_primary,
+    isActive: row.is_active,
+    notes: row.notes,
+  })) as HealthStationCoverageRecord[]
+}
+
+export async function previewHealthStationCoverageImpact(
+  stationId: string | null,
+  rows: Array<{ barangay_id: string; is_primary: boolean; is_active: boolean; notes?: string | null }>,
+) {
+  const { data, error } = await supabase.rpc('preview_health_station_coverage_impact', {
+    p_health_station_id: stationId,
+    p_rows: rows,
+  })
+
+  if (error) {
+    throw new Error(error.message)
+  }
+
+  const payload = data as {
+    barangays_losing_primary?: Array<{ barangay_id: string; barangay_name: string }>
+    barangays_gaining_primary?: Array<{ barangay_id: string; barangay_name: string }>
+    barangays_without_primary_after_save?: Array<{ barangay_id: string; barangay_name: string }>
+  } | null
+
+  return {
+    barangaysLosingPrimary: (payload?.barangays_losing_primary ?? []).map((row) => ({
+      barangayId: row.barangay_id,
+      barangayName: row.barangay_name,
+    })),
+    barangaysGainingPrimary: (payload?.barangays_gaining_primary ?? []).map((row) => ({
+      barangayId: row.barangay_id,
+      barangayName: row.barangay_name,
+    })),
+    barangaysWithoutPrimaryAfterSave: (payload?.barangays_without_primary_after_save ?? []).map((row) => ({
+      barangayId: row.barangay_id,
+      barangayName: row.barangay_name,
+    })),
+  } satisfies HealthStationImpactPreview
+}
+
+export async function upsertHealthStation(input: {
+  stationId?: string | null
+  name: string
+  facilityType: 'BHS' | 'BHC' | 'HEALTH_CENTER' | 'OTHER'
+  physicalCityBarangayId: string
+  address: string
+  notes: string
+  isActive: boolean
+}) {
+  const headers = await getFunctionHeaders()
+  const { data, error } = await supabase.functions.invoke('health-station-upsert', {
+    body: {
+      station_id: input.stationId ?? null,
+      name: input.name,
+      facility_type: input.facilityType,
+      physical_city_barangay_id: input.physicalCityBarangayId,
+      address: input.address || null,
+      notes: input.notes || null,
+      is_active: input.isActive,
+    },
+    headers,
+  })
+
+  if (error || data?.error) {
+    throw new Error(error?.message ?? data?.error?.message ?? data?.error ?? 'Unable to save health station.')
+  }
+
+  return data?.data ?? data
+}
+
+export async function replaceHealthStationCoverage(
+  stationId: string,
+  rows: Array<{ barangay_id: string; is_primary: boolean; is_active: boolean; notes?: string | null }>,
+) {
+  const headers = await getFunctionHeaders()
+  const { data, error } = await supabase.functions.invoke('health-station-coverage-apply', {
+    body: {
+      health_station_id: stationId,
+      rows,
+    },
+    headers,
+  })
+
+  if (error || data?.error) {
+    throw new Error(error?.message ?? data?.error?.message ?? data?.error ?? 'Unable to save health station coverage.')
+  }
+
+  return data?.data ?? data
+}
+
+export async function deactivateHealthStation(stationId: string, reason: string) {
+  const headers = await getFunctionHeaders()
+  const { data, error } = await supabase.functions.invoke('health-station-deactivate', {
+    body: {
+      health_station_id: stationId,
+      reason,
+    },
+    headers,
+  })
+
+  if (error || data?.error) {
+    throw new Error(error?.message ?? data?.error?.message ?? data?.error ?? 'Unable to deactivate health station.')
+  }
+
+  return data?.data ?? data
+}
+
+export async function reactivateHealthStation(stationId: string, reason: string) {
+  const headers = await getFunctionHeaders()
+  const { data, error } = await supabase.functions.invoke('health-station-reactivate', {
+    body: {
+      health_station_id: stationId,
+      reason,
+    },
+    headers,
+  })
+
+  if (error || data?.error) {
+    throw new Error(error?.message ?? data?.error?.message ?? data?.error ?? 'Unable to reactivate health station.')
   }
 
   return data?.data ?? data

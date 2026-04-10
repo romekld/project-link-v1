@@ -3,6 +3,7 @@ import type { FeatureCollection, MultiPolygon, Polygon } from 'geojson'
 import type {
   CityBarangayRegistryRecord,
   CoverageMapViewRow,
+  HealthStationManagementRecord,
   CoveragePlannerRecord,
   HealthStationPinRecord,
   IntelligenceFixtures,
@@ -171,4 +172,38 @@ export function buildHealthStationPins(fixtures: IntelligenceFixtures): HealthSt
       }
     })
     .sort((left, right) => left.stationName.localeCompare(right.stationName))
+}
+
+export function buildHealthStationPinsFromStationRows(
+  stations: HealthStationManagementRecord[],
+  cityBarangays: CityBarangayRegistryRecord[],
+): HealthStationPinRecord[] {
+  const geometryByCityBarangayId = new Map(cityBarangays.map((record) => [record.barangayId, record.geometry]))
+  const cityBarangayById = new Map(cityBarangays.map((record) => [record.barangayId, record]))
+  const pins: HealthStationPinRecord[] = []
+
+  for (const station of stations) {
+    const geometry = geometryByCityBarangayId.get(station.physicalCityBarangayId)
+    const cityBarangay = cityBarangayById.get(station.physicalCityBarangayId)
+    if (!geometry || !cityBarangay) {
+      continue
+    }
+
+    const [minX, minY, maxX, maxY] = bbox(geometry)
+
+    pins.push({
+      id: station.id,
+      stationName: station.name,
+      facilityType: station.facilityType,
+      physicalCityBarangayId: station.physicalCityBarangayId,
+      barangayCode: cityBarangay.barangayCode,
+      barangayName: station.physicalBarangayName,
+      latitude: roundCoordinate((minY + maxY) / 2),
+      longitude: roundCoordinate((minX + maxX) / 2),
+      isPrimary: station.primaryAssignmentsCount > 0,
+      draftStatus: 'saved',
+    })
+  }
+
+  return pins.sort((left, right) => left.stationName.localeCompare(right.stationName))
 }

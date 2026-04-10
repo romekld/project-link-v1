@@ -31,6 +31,7 @@ export function MidwifeMasterListsPage() {
       { label: 'HH Profiles', href: '/midwife/hh-profiles' },
       { label: 'Master Lists' },
     ],
+    showTitle: false,
   })
 
   const [bucket, setBucket] = useState<MasterListBucket>('pregnant-postpartum')

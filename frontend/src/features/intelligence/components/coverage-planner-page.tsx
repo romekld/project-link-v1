@@ -1,6 +1,7 @@
 import { useCallback, useMemo, useState } from 'react'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
+import { Badge } from '@/components/ui/badge'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import {
   Empty,
@@ -12,6 +13,7 @@ import {
 import { Map, MapControls } from '@/components/ui/map'
 import { useSetPageMeta } from '@/contexts/page-context'
 import { env } from '@/config/env'
+import { cn } from '@/lib/utils'
 import { applyCoverageChanges, loadCoveragePlannerRows } from '@/features/intelligence/api'
 import { loadIntelligenceFixtures } from '@/features/intelligence/fixtures'
 import {
@@ -114,6 +116,10 @@ export function CoveragePlannerPage({ roleScope }: CoveragePlannerPageProps) {
   )
 
   const totals = useMemo(() => buildCoverageSummary(records), [records])
+  const isDatabaseSource = useMemo(
+    () => Boolean(coverageQuery.data?.length),
+    [coverageQuery.data?.length],
+  )
   const addableSelectedCodes = useMemo(
     () => selectedRows.filter((row) => !getEffectiveScope(row)).map((row) => row.barangayCode),
     [selectedRows],
@@ -302,6 +308,21 @@ export function CoveragePlannerPage({ roleScope }: CoveragePlannerPageProps) {
         <Card className="overflow-hidden border-primary/10">
           <CardContent className="p-0">
             <div className="relative h-[calc(100dvh-9rem)] min-h-[34rem] w-full bg-muted/30">
+              <div className="pointer-events-none absolute left-3 top-3 z-10">
+                <Badge
+                  variant="outline"
+                  className="border-border/70 bg-background/80 text-muted-foreground shadow-sm backdrop-blur"
+                >
+                  <span
+                    aria-hidden
+                    className={cn(
+                      'size-1.5 rounded-full',
+                      isDatabaseSource ? 'bg-emerald-500' : 'bg-amber-500',
+                    )}
+                  />
+                  Data source: {isDatabaseSource ? 'Database' : 'Fixture'}
+                </Badge>
+              </div>
               <Map
                 center={[120.9406, 14.3294]}
                 zoom={11}

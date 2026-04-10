@@ -162,7 +162,7 @@ SELECT
   now(),
   now(),
   '{"role": "system_admin", "must_change_password": true}'::jsonb,
-  '{"full_name": "System Admin"}'::jsonb,
+  '{"first_name": "System", "last_name": "Admin"}'::jsonb,
   now(),
   now(),
   '',
@@ -176,7 +176,9 @@ WHERE NOT EXISTS (
 -- 2. Create Profile in public.user_profiles
 INSERT INTO public.user_profiles (
   id,
-  full_name,
+  first_name,
+  last_name,
+  email,
   username,
   date_of_birth,
   sex,
@@ -186,7 +188,9 @@ INSERT INTO public.user_profiles (
 )
 SELECT
   '00000000-0000-0000-0000-000000000001',
-  'System Admin',
+  'System',
+  'Admin',
+  'admin@projectlink.ph',
   'system_admin',
   '1990-01-01',
   'M',

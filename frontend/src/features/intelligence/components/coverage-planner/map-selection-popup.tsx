@@ -28,6 +28,7 @@ export function MapSelectionPopup({
     <MapPopup
       longitude={coordinates[0]}
       latitude={coordinates[1]}
+      closeOnClick={false}
       closeButton
       onClose={onClose}
       className="w-72"

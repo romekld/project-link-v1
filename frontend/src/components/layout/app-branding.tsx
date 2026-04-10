@@ -1,5 +1,5 @@
 import { SidebarMenu, SidebarMenuItem, SidebarMenuButton } from '@/components/ui/sidebar'
-import dasmarinasLogo from '@/assets/dasmarinas-logo.svg'
+import { Activity } from 'lucide-react'
 
 export function AppBranding() {
   return (
@@ -7,7 +7,9 @@ export function AppBranding() {
       <SidebarMenuItem>
         <SidebarMenuButton size="lg" className="cursor-default hover:bg-transparent active:bg-transparent">
           <div className="flex items-center gap-2">
-            <img src={dasmarinasLogo} alt="Dasmarinas City logo" className="h-8 w-8 object-contain" />
+            <div className="flex aspect-square size-8 items-center justify-center rounded-lg bg-sidebar-primary text-sidebar-primary-foreground">
+              <Activity className="size-6 shrink-0" aria-hidden="true" />
+            </div>
             <div className="flex flex-col leading-tight">
               <span className="font-heading text-sm font-semibold">LINK</span>
               <span className="text-xs text-muted-foreground">City Health Office 2</span>

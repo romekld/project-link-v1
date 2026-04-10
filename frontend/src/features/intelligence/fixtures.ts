@@ -182,10 +182,10 @@ export async function loadIntelligenceFixtures() {
 
 export function getAvailableLayersForRole(roleView: MapRoleView): GeoLayerId[] {
   if (roleView === 'dso') {
-    return ['scope', 'diseaseHeat']
+    return ['cho2Boundaries', 'dasmarinasBoundaries', 'diseaseHeat']
   }
 
-  return ['choropleth', 'scope', 'diseaseHeat']
+  return ['choropleth', 'cho2Boundaries', 'dasmarinasBoundaries', 'diseaseHeat']
 }
 
 export function getRoleMapActions(roleView: MapRoleView) {

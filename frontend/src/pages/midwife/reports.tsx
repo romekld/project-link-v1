@@ -16,6 +16,7 @@ export function MidwifeReportsPage() {
   useSetPageMeta({
     title: 'Reports',
     breadcrumbs: [{ label: 'Reports' }],
+    showTitle: false,
   })
 
   return (

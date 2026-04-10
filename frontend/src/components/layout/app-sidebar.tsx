@@ -1,3 +1,4 @@
+import type { ComponentProps } from 'react'
 import {
   Sidebar,
   SidebarContent,
@@ -12,14 +13,17 @@ import { NavQuickLinks } from './nav-quick-links'
 import { NavUser } from './nav-user'
 import { NAV_CONFIG, QUICK_LINKS_CONFIG } from './nav-config'
 
-export function AppSidebar() {
+export function AppSidebar({
+  variant = 'inset',
+  ...props
+}: ComponentProps<typeof Sidebar>) {
   const { role } = useAuth()
 
   const navItems = role ? (NAV_CONFIG[role] ?? []) : []
   const quickLinks = role ? (QUICK_LINKS_CONFIG[role] ?? []) : []
 
   return (
-    <Sidebar collapsible="icon">
+    <Sidebar collapsible="icon" variant={variant} {...props}>
       <SidebarHeader>
         <AppBranding />
       </SidebarHeader>

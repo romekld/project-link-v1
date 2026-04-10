@@ -1,0 +1,121 @@
+- generic [ref=e2]:
+  - generic [ref=e3]:
+    - generic [ref=e6]:
+      - list [ref=e8]:
+        - listitem [ref=e9]:
+          - button "LINK City Health Office 2" [ref=e10]:
+            - generic [ref=e11]:
+              - img [ref=e13]
+              - generic [ref=e15]:
+                - generic [ref=e16]: LINK
+                - generic [ref=e17]: City Health Office 2
+      - generic [ref=e18]:
+        - generic [ref=e19]:
+          - generic [ref=e20]: Navigation
+          - list [ref=e21]:
+            - listitem [ref=e22]:
+              - link "Dashboard" [ref=e23] [cursor=pointer]:
+                - /url: /admin/dashboard
+                - img [ref=e24]
+                - generic [ref=e29]: Dashboard
+            - listitem [ref=e31]:
+              - button "Users" [ref=e32]:
+                - img [ref=e33]
+                - generic [ref=e38]: Users
+                - img [ref=e39]
+            - listitem [ref=e42]:
+              - button "BHS Registry" [ref=e43]:
+                - img [ref=e44]
+                - generic [ref=e48]: BHS Registry
+                - img [ref=e49]
+            - listitem [ref=e51]:
+              - link "Audit Logs" [ref=e52] [cursor=pointer]:
+                - /url: /admin/audit-logs
+                - img [ref=e53]
+                - generic [ref=e59]: Audit Logs
+        - generic [ref=e60]:
+          - generic [ref=e61]: Quick Links
+          - list [ref=e62]:
+            - listitem [ref=e63]:
+              - link "Create User" [ref=e64] [cursor=pointer]:
+                - /url: /admin/users/new
+                - img [ref=e65]
+                - generic [ref=e68]: Create User
+            - listitem [ref=e69]:
+              - link "Coverage Planner" [ref=e70] [cursor=pointer]:
+                - /url: /admin/bhs/coverage
+                - img [ref=e71]
+                - generic [ref=e75]: Coverage Planner
+      - list [ref=e77]:
+        - listitem [ref=e78]:
+          - button "UU User" [ref=e79]:
+            - generic [ref=e81]: UU
+            - generic [ref=e83]: User
+            - img [ref=e84]
+      - button "Toggle Sidebar" [ref=e87]
+    - main [ref=e88]:
+      - generic [ref=e89]:
+        - button "Toggle Sidebar" [ref=e90]:
+          - img
+          - generic [ref=e91]: Toggle Sidebar
+        - separator [ref=e92]
+        - navigation "breadcrumb" [ref=e93]:
+          - list [ref=e94]:
+            - listitem [ref=e95]:
+              - link "Dashboard" [disabled] [ref=e96]
+        - generic [ref=e97]:
+          - button "Theme mode" [ref=e98]:
+            - img
+          - button "Open user menu" [ref=e99]:
+            - generic [ref=e101]: UU
+      - generic [ref=e102]:
+        - heading "Dashboard" [level=1] [ref=e103]
+        - generic [ref=e104]:
+          - generic [ref=e105]:
+            - generic [ref=e106]:
+              - heading "Dashboard" [level=1] [ref=e107]
+              - paragraph [ref=e108]: User management and system configuration
+            - generic [ref=e109]:
+              - button "Create User" [ref=e110] [cursor=pointer]:
+                - img
+                - text: Create User
+              - button "Audit Logs" [ref=e111] [cursor=pointer]:
+                - img
+                - text: Audit Logs
+          - generic [ref=e112]:
+            - generic [ref=e114]:
+              - generic [ref=e115]: Total Users
+              - img [ref=e116]
+            - generic [ref=e124]:
+              - generic [ref=e125]: Active
+              - img [ref=e126]
+            - generic [ref=e133]:
+              - generic [ref=e134]: Inactive
+              - img [ref=e135]
+            - generic [ref=e143]:
+              - generic [ref=e144]: Health Stations
+              - img [ref=e145]
+          - generic [ref=e153]: Users by Role
+          - generic [ref=e160]:
+            - link "Manage Users View, edit, and manage all user accounts" [ref=e163] [cursor=pointer]:
+              - /url: /admin/users
+              - generic [ref=e164]:
+                - img [ref=e166]
+                - generic [ref=e171]:
+                  - paragraph [ref=e172]: Manage Users
+                  - paragraph [ref=e173]: View, edit, and manage all user accounts
+            - link "BHS Registry Manage the 32 Barangay Health Stations" [ref=e176] [cursor=pointer]:
+              - /url: /admin/bhs
+              - generic [ref=e177]:
+                - img [ref=e179]
+                - generic [ref=e183]:
+                  - paragraph [ref=e184]: BHS Registry
+                  - paragraph [ref=e185]: Manage the 32 Barangay Health Stations
+            - link "Audit Logs Review system activity and changes" [ref=e188] [cursor=pointer]:
+              - /url: /admin/audit-logs
+              - generic [ref=e189]:
+                - img [ref=e191]
+                - generic [ref=e194]:
+                  - paragraph [ref=e195]: Audit Logs
+                  - paragraph [ref=e196]: Review system activity and changes
+  - region "Notifications alt+T"

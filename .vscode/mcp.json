@@ -14,6 +14,10 @@
 		"Vercel": {
 			"url": "https://mcp.vercel.com",
 			"type": "http"
+		},
+		"mermaid-mcp": {
+			"url": "https://mcp.mermaid.ai/mcp",
+			"type": "http"
 		}
 	},
 	"inputs": []

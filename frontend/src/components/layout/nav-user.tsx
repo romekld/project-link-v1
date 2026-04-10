@@ -1,6 +1,5 @@
-import { useNavigate } from '@tanstack/react-router'
-import { ChevronsUpDown, LogOut, Settings, UserRound } from 'lucide-react'
-import { useAuth } from '@/features/auth/hooks/use-auth'
+import { ChevronsUpDown } from 'lucide-react'
+import { UserAvatar } from '@/components/user-avatar'
 import {
   SidebarMenu,
   SidebarMenuItem,
@@ -9,26 +8,22 @@ import {
 } from '@/components/ui/sidebar'
 import {
   DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuGroup,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
+import { useUserMenuData } from './use-user-menu-data'
+import { UserMenuDropdownContent } from './user-menu-dropdown-content'
 
 export function NavUser() {
-  const { session, signOut } = useAuth()
   const { isMobile } = useSidebar()
-  const navigate = useNavigate()
-
-  const email = session?.user?.email ?? ''
-  const role = session?.user?.app_metadata?.role as string | undefined
-
-  const handleLogout = async () => {
-    await signOut()
-    navigate({ to: '/login', replace: true })
-  }
+  const {
+    email,
+    displayName,
+    roleLabel,
+    firstName,
+    lastName,
+    photoPath,
+    handleLogout,
+  } = useUserMenuData()
 
   return (
     <SidebarMenu>
@@ -42,55 +37,28 @@ export function NavUser() {
               />
             }
           >
-            <div className="flex h-8 w-8 items-center justify-center rounded-full bg-muted text-sm font-medium shrink-0">
-              {email.charAt(0).toUpperCase()}
-            </div>
+            <UserAvatar
+              firstName={firstName}
+              lastName={lastName}
+              photoPath={photoPath}
+            />
             <div className="flex flex-col leading-tight truncate">
-              <span className="text-sm font-medium truncate">{email}</span>
-              {role && (
-                <span className="text-xs text-muted-foreground capitalize">
-                  {role.replace(/_/g, ' ')}
-                </span>
-              )}
+              <span className="text-sm font-medium truncate">{displayName}</span>
+              {roleLabel ? (
+                <span className="text-xs text-muted-foreground truncate">{roleLabel}</span>
+              ) : null}
             </div>
             <ChevronsUpDown className="ml-auto size-4 shrink-0" />
           </DropdownMenuTrigger>
 
-          <DropdownMenuContent
-            className="min-w-52 rounded-lg"
+          <UserMenuDropdownContent
+            displayName={displayName}
+            email={email}
+            roleLabel={roleLabel}
+            onLogout={handleLogout}
             side={isMobile ? 'bottom' : 'right'}
             align="end"
-            sideOffset={4}
-          >
-            <DropdownMenuGroup>
-              <DropdownMenuLabel className="text-xs text-muted-foreground font-normal">
-                {email}
-              </DropdownMenuLabel>
-            </DropdownMenuGroup>
-
-            <DropdownMenuSeparator />
-
-            <DropdownMenuGroup>
-              <DropdownMenuItem>
-                <UserRound className="mr-2 size-4" />
-                Account
-              </DropdownMenuItem>
-              <DropdownMenuItem>
-                <Settings className="mr-2 size-4" />
-                Settings
-              </DropdownMenuItem>
-            </DropdownMenuGroup>
-
-            <DropdownMenuSeparator />
-
-            <DropdownMenuItem
-              className="text-destructive focus:text-destructive"
-              onClick={handleLogout}
-            >
-              <LogOut className="mr-2 size-4" />
-              Log out
-            </DropdownMenuItem>
-          </DropdownMenuContent>
+          />
         </DropdownMenu>
       </SidebarMenuItem>
     </SidebarMenu>

@@ -1,6 +1,5 @@
-import { Outlet } from '@tanstack/react-router'
-import { Link } from '@tanstack/react-router'
-import { Moon, Sun } from 'lucide-react'
+import { Link, Outlet } from '@tanstack/react-router'
+import { ArrowLeft } from 'lucide-react'
 import { SidebarInset, SidebarProvider, SidebarTrigger } from '@/components/ui/sidebar'
 import { Separator } from '@/components/ui/separator'
 import { Button } from '@/components/ui/button'
@@ -13,24 +12,31 @@ import {
   BreadcrumbSeparator,
 } from '@/components/ui/breadcrumb'
 import { AppSidebar } from './app-sidebar'
-import { useTheme } from '@/contexts/theme-context'
 import { usePageMeta } from '@/contexts/page-context'
+import { HeaderThemeMenu } from './header-theme-menu'
+import { HeaderUserMenu } from './header-user-menu'
 
 export function AppShell() {
-  const { theme, toggle } = useTheme()
-  const { breadcrumbs } = usePageMeta()
+  const { breadcrumbs, actions, backHref, title, showTitle = true } = usePageMeta()
 
   return (
-    <SidebarProvider>
-      <AppSidebar />
-      <SidebarInset>
-        <header className="sticky top-0 z-40 flex h-12 shrink-0 items-center gap-2 border-b bg-background/95 px-4 supports-backdrop-filter:backdrop-blur">
-          <SidebarTrigger className="-ml-1" />
+    <SidebarProvider className="h-svh">
+      <AppSidebar/>
+      <SidebarInset className="overflow-hidden">
+        <header className="flex min-h-14 shrink-0 items-center gap-2 border-b bg-background/95 px-3 supports-backdrop-filter:backdrop-blur md:px-4">
+          {backHref ? (
+            <Button variant="ghost" size="icon" className="-ml-1 size-11 md:size-9" render={<Link to={backHref} />}>
+              <ArrowLeft className="size-4" />
+              <span className="sr-only">Go back</span>
+            </Button>
+          ) : (
+            <SidebarTrigger className="-ml-1 size-11 md:size-9" />
+          )}
 
           {breadcrumbs.length > 0 && (
             <>
               <Separator orientation="vertical" className="h-4" />
-              <Breadcrumb>
+              <Breadcrumb className="min-w-0">
                 <BreadcrumbList>
                   {breadcrumbs.flatMap((crumb, i) => (
                     i < breadcrumbs.length - 1 ? [
@@ -55,22 +61,24 @@ export function AppShell() {
             </>
           )}
 
-          <div className="ml-auto">
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={toggle}
-              className="h-8 w-8"
-              aria-label={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
-            >
-              {theme === 'dark' ? <Sun className="size-4" /> : <Moon className="size-4" />}
-            </Button>
+          {actions && (
+            <div className="flex items-center gap-2">
+              {actions}
+            </div>
+          )}
+
+          <div className="ml-auto flex items-center gap-1 md:gap-2">
+            <HeaderThemeMenu />
+            <HeaderUserMenu />
           </div>
         </header>
 
-        <main className="min-h-0 flex-1 overflow-auto p-4 md:p-6">
+        <div className="flex flex-1 flex-col overflow-y-auto px-4 py-3 md:px-6 md:py-5 [&::-webkit-scrollbar]:w-1.5 [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-border">
+          {showTitle && title && (
+            <h1 className="mb-4 text-xl font-semibold tracking-tight md:text-2xl">{title}</h1>
+          )}
           <Outlet />
-        </main>
+        </div>
       </SidebarInset>
     </SidebarProvider>
   )

@@ -15,7 +15,12 @@ import { useSetPageMeta } from '@/contexts/page-context'
 import { useIsMobile } from '@/hooks/use-mobile'
 import { loadIntelligenceFixtures } from '@/features/intelligence/fixtures'
 import type { MapRoleView } from '@/features/intelligence/types'
-import { getMapStyles, mapViewportHeightClass } from './intelligence-map/constants'
+import {
+  defaultMapColorPreset,
+  getMapStyles,
+  mapViewportHeightClass,
+  type MapColorPresetId,
+} from './intelligence-map/constants'
 import { LayerMenu } from './intelligence-map/layer-menu'
 import { MapLayerSurface, MapProviderControls } from './intelligence-map/layer-surface'
 import { LoadingState } from './intelligence-map/loading-state'
@@ -31,6 +36,7 @@ interface IntelligenceMapPageProps {
 export function IntelligenceMapPage({ roleView }: IntelligenceMapPageProps) {
   const isMobile = useIsMobile()
   const [selectedCode, setSelectedCode] = useState<string | null>(null)
+  const [mapColorPreset, setMapColorPreset] = useState<MapColorPresetId>(defaultMapColorPreset)
 
   const { mapProvider, handleProviderChange } = useMapProvider()
   const { availableLayers, effectiveVisibleLayers, toggleLayer, resetLayers } = useLayerControls(roleView)
@@ -42,6 +48,10 @@ export function IntelligenceMapPage({ roleView }: IntelligenceMapPageProps) {
 
   const mapStyles = useMemo(() => getMapStyles(mapProvider, env.maptilerApiKey), [mapProvider])
   const selectedSnapshot = fixturesQuery.data?.snapshots[selectedCode ?? ''] ?? null
+  const handleResetControls = () => {
+    resetLayers()
+    setMapColorPreset(defaultMapColorPreset)
+  }
 
   useSetPageMeta({
     title: 'Disease Map',
@@ -104,6 +114,7 @@ export function IntelligenceMapPage({ roleView }: IntelligenceMapPageProps) {
                   fixtures={fixtures}
                   selectedCode={selectedCode}
                   visibleLayers={effectiveVisibleLayers}
+                  mapColorPreset={mapColorPreset}
                   onSelectCode={setSelectedCode}
                 />
               </Map>
@@ -111,8 +122,10 @@ export function IntelligenceMapPage({ roleView }: IntelligenceMapPageProps) {
               <LayerMenu
                 availableLayers={availableLayers}
                 effectiveVisibleLayers={effectiveVisibleLayers}
+                mapColorPreset={mapColorPreset}
                 onToggleLayer={toggleLayer}
-                onReset={resetLayers}
+                onMapColorPresetChange={setMapColorPreset}
+                onReset={handleResetControls}
               />
             </div>
           </CardContent>

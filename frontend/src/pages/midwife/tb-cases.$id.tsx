@@ -40,6 +40,7 @@ export function MidwifeTbCaseDetailPage() {
       { label: 'NTP Registry', href: '/midwife/tb-cases' },
       { label: tbCase?.patientName ?? 'TB Case' },
     ],
+    showTitle: false,
   })
 
   if (!tbCase) {
