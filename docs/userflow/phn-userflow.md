@@ -15,7 +15,7 @@ Login → MCT Dashboard
     [Click BHS cell — SUBMITTED or REVIEWED]
     │
     └── ST Detail View
-              ├── Table: indicator | numerator | denominator | coverage %
+              ├── Table: indicator  | numerator | denominator | coverage %
               ├── NHTS / Non-NHTS disaggregation columns
               ├── Comparison column: city average for same indicator (if prior MCT exists)
               └── Outlier highlight: rows deviating significantly from city average

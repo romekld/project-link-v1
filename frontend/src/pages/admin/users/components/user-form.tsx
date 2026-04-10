@@ -1047,14 +1047,15 @@ function HealthStationCombobox({
     ? stations.filter((station) => station.name.toLowerCase().includes(normalizedSearch))
     : stations
 
-  useEffect(() => {
-    if (!open && search) {
+  const handleOpenChange = (nextOpen: boolean) => {
+    setOpen(nextOpen)
+    if (!nextOpen && search) {
       setSearch('')
     }
-  }, [open, search])
+  }
 
   return (
-    <Popover open={disabled ? false : open} onOpenChange={setOpen}>
+    <Popover open={disabled ? false : open} onOpenChange={handleOpenChange}>
       <PopoverTrigger
         render={
           <Button
@@ -1100,7 +1101,7 @@ function HealthStationCombobox({
                   value={station.id}
                   onSelect={() => {
                     onChange(station.id)
-                    setOpen(false)
+                    handleOpenChange(false)
                   }}
                   showIndicator={false}
                   className="items-start gap-3 py-2.5"

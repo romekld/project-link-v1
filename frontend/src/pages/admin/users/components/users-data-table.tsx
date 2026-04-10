@@ -247,6 +247,8 @@ export function UsersDataTable({
     },
   ], [onManage, onResetPassword, onToggleStatus])
 
+  // TanStack Table exposes imperative helpers that the React Compiler lint flags generically.
+  // eslint-disable-next-line react-hooks/incompatible-library
   const table = useReactTable({
     data: users,
     columns,

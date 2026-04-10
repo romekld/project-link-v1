@@ -61,6 +61,8 @@ export function IntelligenceDataTable<TData, TValue>({
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({})
   const [rowSelection, setRowSelection] = useState<RowSelectionState>({})
 
+  // TanStack Table exposes imperative helpers that the React Compiler lint flags generically.
+  // eslint-disable-next-line react-hooks/incompatible-library
   const table = useReactTable({
     data,
     columns,

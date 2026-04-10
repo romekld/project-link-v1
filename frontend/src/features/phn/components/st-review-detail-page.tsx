@@ -95,6 +95,130 @@ function replaceRowFlag(
   return rows.map((row) => (row.indicatorCode === indicatorCode ? { ...row, flag: nextFlag } : row))
 }
 
+function ReviewFlagPanel({
+  row,
+  onFlag,
+  onResolve,
+  onOverride,
+}: {
+  row: PhnReviewIndicatorRow
+  onFlag: (row: PhnReviewIndicatorRow) => void
+  onResolve: (row: PhnReviewIndicatorRow) => void
+  onOverride: (row: PhnReviewIndicatorRow) => void
+}) {
+  if (row.flag) {
+    return (
+      <div className="space-y-3">
+        <div className="flex flex-wrap items-center gap-2">
+          <ReviewFlagBadge flagStatus={row.flag.flagStatus} />
+          <span className="text-xs text-muted-foreground">{row.flag.flagReasonCode}</span>
+        </div>
+        <p className="text-sm leading-6 text-muted-foreground">{row.flag.flagComment}</p>
+        {row.flag.midwifeResolutionComment ? (
+          <div className="rounded-lg border border-border/70 bg-muted/30 p-3 text-sm leading-6 text-muted-foreground">
+            Midwife response: {row.flag.midwifeResolutionComment}
+          </div>
+        ) : null}
+        {row.flag.phnOverrideJustification ? (
+          <div className="rounded-lg border border-border/70 bg-muted/30 p-3 text-sm leading-6 text-muted-foreground">
+            PHN override note: {row.flag.phnOverrideJustification}
+          </div>
+        ) : null}
+        <div className="flex flex-wrap gap-2">
+          {row.flag.flagStatus === 'open' ? (
+            <>
+              <Button variant="outline" size="sm" onClick={() => onResolve(row)}>
+                Mark resolved
+              </Button>
+              <Button variant="outline" size="sm" onClick={() => onOverride(row)}>
+                Override
+              </Button>
+            </>
+          ) : (
+            <Button variant="outline" size="sm" onClick={() => onFlag(row)}>
+              Re-open flag
+            </Button>
+          )}
+        </div>
+      </div>
+    )
+  }
+
+  return (
+    <Button variant="outline" size="sm" onClick={() => onFlag(row)}>
+      <Flag data-icon="inline-start" />
+      Flag row
+    </Button>
+  )
+}
+
+function ReviewIndicatorStat({
+  label,
+  value,
+}: {
+  label: string
+  value: string
+}) {
+  return (
+    <div className="rounded-lg border border-border/70 bg-muted/20 p-3">
+      <div className="text-xs text-muted-foreground">{label}</div>
+      <div className="mt-1 text-sm font-medium text-foreground">{value}</div>
+    </div>
+  )
+}
+
+function ReviewIndicatorCards({
+  rows,
+  onFlag,
+  onResolve,
+  onOverride,
+}: {
+  rows: PhnReviewIndicatorRow[]
+  onFlag: (row: PhnReviewIndicatorRow) => void
+  onResolve: (row: PhnReviewIndicatorRow) => void
+  onOverride: (row: PhnReviewIndicatorRow) => void
+}) {
+  return (
+    <div className="space-y-3 xl:hidden">
+      {rows.map((row) => (
+        <Card
+          key={row.indicatorCode}
+          className={row.flag?.flagStatus === 'open' ? 'border-destructive/40 shadow-sm shadow-destructive/10' : undefined}
+        >
+          <CardContent className="space-y-4 p-4">
+            <div className="space-y-2">
+              <div className="flex flex-wrap items-start gap-2">
+                <div className="min-w-0 flex-1">
+                  <div className="font-medium text-foreground">{row.indicatorName}</div>
+                  <div className="mt-1 text-xs text-muted-foreground">{row.indicatorCode}</div>
+                </div>
+                <PhnProgramClusterBadge cluster={row.programCluster} />
+              </div>
+            </div>
+
+            <div className="grid gap-3 sm:grid-cols-2">
+              <ReviewIndicatorStat label="NHTS" value={String(row.numeratorNhts)} />
+              <ReviewIndicatorStat label="Non-NHTS" value={String(row.numeratorNonNhts)} />
+              <ReviewIndicatorStat label="Total / Denominator" value={`${row.numeratorTotal} / ${row.denominator}`} />
+              <ReviewIndicatorStat label="Coverage" value={formatPhnPercent(row.coveragePercent)} />
+              <ReviewIndicatorStat label="City avg" value={formatPhnPercent(row.cityAveragePercent)} />
+              <ReviewIndicatorStat
+                label="Deviation"
+                value={`${row.deviationPercent > 0 ? '+' : ''}${formatPhnPercent(row.deviationPercent)}`}
+              />
+            </div>
+
+            <div className="rounded-xl border border-border/70 bg-muted/10 p-4">
+              <div className="mb-3 text-sm font-medium text-foreground">Review flag</div>
+              <ReviewFlagPanel row={row} onFlag={onFlag} onResolve={onResolve} onOverride={onOverride} />
+            </div>
+          </CardContent>
+        </Card>
+      ))}
+    </div>
+  )
+}
+
 function ReviewIndicatorTable({
   rows,
   onFlag,
@@ -107,24 +231,24 @@ function ReviewIndicatorTable({
   onOverride: (row: PhnReviewIndicatorRow) => void
 }) {
   return (
-    <div className="overflow-x-auto">
+    <div className="hidden overflow-x-auto xl:block">
       <Table>
         <TableHeader>
           <TableRow>
-            <TableHead>Indicator</TableHead>
+            <TableHead className="min-w-64">Indicator</TableHead>
             <TableHead>NHTS</TableHead>
             <TableHead>Non-NHTS</TableHead>
             <TableHead>Total / Denominator</TableHead>
             <TableHead>Coverage</TableHead>
             <TableHead>City avg</TableHead>
             <TableHead>Deviation</TableHead>
-            <TableHead className="min-w-72">Review flag</TableHead>
+            <TableHead className="min-w-80">Review flag</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
           {rows.map((row) => (
             <TableRow key={row.indicatorCode}>
-              <TableCell>
+              <TableCell className="align-top whitespace-normal">
                 <div className="space-y-2">
                   <div className="font-medium text-foreground">{row.indicatorName}</div>
                   <div className="flex flex-wrap gap-2">
@@ -133,53 +257,14 @@ function ReviewIndicatorTable({
                   </div>
                 </div>
               </TableCell>
-              <TableCell>{row.numeratorNhts}</TableCell>
-              <TableCell>{row.numeratorNonNhts}</TableCell>
-              <TableCell>{row.numeratorTotal} / {row.denominator}</TableCell>
-              <TableCell>{formatPhnPercent(row.coveragePercent)}</TableCell>
-              <TableCell>{formatPhnPercent(row.cityAveragePercent)}</TableCell>
-              <TableCell>{row.deviationPercent > 0 ? '+' : ''}{formatPhnPercent(row.deviationPercent)}</TableCell>
-              <TableCell>
-                {row.flag ? (
-                  <div className="space-y-3">
-                    <div className="flex flex-wrap items-center gap-2">
-                      <ReviewFlagBadge flagStatus={row.flag.flagStatus} />
-                      <span className="text-xs text-muted-foreground">{row.flag.flagReasonCode}</span>
-                    </div>
-                    <p className="text-sm text-muted-foreground">{row.flag.flagComment}</p>
-                    {row.flag.midwifeResolutionComment ? (
-                      <div className="rounded-lg border border-border/70 bg-muted/30 p-3 text-sm text-muted-foreground">
-                        Midwife response: {row.flag.midwifeResolutionComment}
-                      </div>
-                    ) : null}
-                    {row.flag.phnOverrideJustification ? (
-                      <div className="rounded-lg border border-border/70 bg-muted/30 p-3 text-sm text-muted-foreground">
-                        PHN override note: {row.flag.phnOverrideJustification}
-                      </div>
-                    ) : null}
-                    <div className="flex flex-wrap gap-2">
-                      {row.flag.flagStatus === 'open' ? (
-                        <>
-                          <Button variant="outline" size="sm" onClick={() => onResolve(row)}>
-                            Mark resolved
-                          </Button>
-                          <Button variant="outline" size="sm" onClick={() => onOverride(row)}>
-                            Override
-                          </Button>
-                        </>
-                      ) : (
-                        <Button variant="outline" size="sm" onClick={() => onFlag(row)}>
-                          Re-open flag
-                        </Button>
-                      )}
-                    </div>
-                  </div>
-                ) : (
-                  <Button variant="outline" size="sm" onClick={() => onFlag(row)}>
-                    <Flag data-icon="inline-start" />
-                    Flag row
-                  </Button>
-                )}
+              <TableCell className="align-top">{row.numeratorNhts}</TableCell>
+              <TableCell className="align-top">{row.numeratorNonNhts}</TableCell>
+              <TableCell className="align-top">{row.numeratorTotal} / {row.denominator}</TableCell>
+              <TableCell className="align-top">{formatPhnPercent(row.coveragePercent)}</TableCell>
+              <TableCell className="align-top">{formatPhnPercent(row.cityAveragePercent)}</TableCell>
+              <TableCell className="align-top">{row.deviationPercent > 0 ? '+' : ''}{formatPhnPercent(row.deviationPercent)}</TableCell>
+              <TableCell className="align-top whitespace-normal">
+                <ReviewFlagPanel row={row} onFlag={onFlag} onResolve={onResolve} onOverride={onOverride} />
               </TableCell>
             </TableRow>
           ))}
@@ -344,43 +429,50 @@ export function PhnStReviewDetailPage() {
         </PhnInfoBanner>
       )}
 
-      <div className="grid gap-4 xl:grid-cols-[1.25fr_0.75fr]">
-        <div className="space-y-4">
-          <PhnSectionCard
-            title="Review header"
-            description="The PHN header fields mirror the station review form and remain visible while the indicator table is being audited."
-          >
-            <div className="grid gap-3 md:grid-cols-2">
-              <div className="rounded-xl border border-border/70 bg-muted/20 p-4">
-                <div className="text-xs text-muted-foreground">Submitted</div>
-                <div className="mt-1 text-sm font-medium text-foreground">{formatPhnDateTime(record.submittedAt)}</div>
-              </div>
-              <div className="rounded-xl border border-border/70 bg-muted/20 p-4">
-                <div className="text-xs text-muted-foreground">Review started</div>
-                <div className="mt-1 text-sm font-medium text-foreground">{formatPhnDateTime(record.reviewStartedAt)}</div>
-              </div>
-              <div className="rounded-xl border border-border/70 bg-muted/20 p-4">
-                <div className="text-xs text-muted-foreground">Reviewer</div>
-                <div className="mt-1 text-sm font-medium text-foreground">{record.reviewedByUserName}</div>
-              </div>
-              <div className="rounded-xl border border-border/70 bg-muted/20 p-4">
-                <div className="text-xs text-muted-foreground">Reporting period</div>
-                <div className="mt-1 text-sm font-medium text-foreground">{record.periodMonth}/{record.periodYear}</div>
-              </div>
-            </div>
-          </PhnSectionCard>
+      <PhnSectionCard
+        title="Review header"
+        description="The PHN header fields mirror the station review form and remain visible while the indicator table is being audited."
+      >
+        <div className="grid gap-3 md:grid-cols-2">
+          <div className="rounded-xl border border-border/70 bg-muted/20 p-4">
+            <div className="text-xs text-muted-foreground">Submitted</div>
+            <div className="mt-1 text-sm font-medium text-foreground">{formatPhnDateTime(record.submittedAt)}</div>
+          </div>
+          <div className="rounded-xl border border-border/70 bg-muted/20 p-4">
+            <div className="text-xs text-muted-foreground">Review started</div>
+            <div className="mt-1 text-sm font-medium text-foreground">{formatPhnDateTime(record.reviewStartedAt)}</div>
+          </div>
+          <div className="rounded-xl border border-border/70 bg-muted/20 p-4">
+            <div className="text-xs text-muted-foreground">Reviewer</div>
+            <div className="mt-1 text-sm font-medium text-foreground">{record.reviewedByUserName}</div>
+          </div>
+          <div className="rounded-xl border border-border/70 bg-muted/20 p-4">
+            <div className="text-xs text-muted-foreground">Reporting period</div>
+            <div className="mt-1 text-sm font-medium text-foreground">{record.periodMonth}/{record.periodYear}</div>
+          </div>
+        </div>
+      </PhnSectionCard>
 
+      <div className="grid gap-4 xl:grid-cols-[minmax(0,1fr)_20rem] 2xl:grid-cols-[minmax(0,1fr)_22rem]">
+        <div className="order-2 min-w-0 xl:order-1">
           <PhnSectionCard
             title="Indicator review workspace"
             description="Hard validation failures and soft outliers stay visible at the row level so returned feedback stays actionable."
+            className="min-w-0"
           >
             <Tabs value={clusterFilter} onValueChange={(value) => setClusterFilter(value as PhnProgramCluster | 'all')}>
-              <TabsList className="h-auto flex-wrap">
+              <TabsList className="h-auto flex-wrap justify-start">
                 {REVIEW_CLUSTER_OPTIONS.map((option) => (
                   <TabsTrigger key={option.value} value={option.value}>{option.label}</TabsTrigger>
                 ))}
               </TabsList>
               <TabsContent value={clusterFilter} className="mt-4">
+                <ReviewIndicatorCards
+                  rows={visibleRows}
+                  onFlag={openFlagDialog}
+                  onResolve={resolveFlag}
+                  onOverride={openOverrideDialog}
+                />
                 <ReviewIndicatorTable
                   rows={visibleRows}
                   onFlag={openFlagDialog}
@@ -392,7 +484,7 @@ export function PhnStReviewDetailPage() {
           </PhnSectionCard>
         </div>
 
-        <div className="space-y-4">
+        <div className="order-1 space-y-4 xl:sticky xl:top-4 xl:order-2 xl:self-start">
           <PhnSectionCard
             title="Midwife response context"
             description="Keep the correction trail visible before making the final station decision."
