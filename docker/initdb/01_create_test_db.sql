@@ -1,0 +1,3 @@
+CREATE DATABASE test_hsms;
+\c test_hsms
+CREATE EXTENSION IF NOT EXISTS postgis;

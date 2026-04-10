@@ -88,20 +88,19 @@ export const NAV_CONFIG: Record<UserRole, NavItem[]> = {
 
   nurse_phn: [
     { title: 'Dashboard', url: '/phn/dashboard', icon: LayoutDashboard },
-    { title: 'MCT Dashboard', url: '/phn/mct', icon: Activity },
-    { title: 'Patients', url: '/phn/patients', icon: Users },
+    { title: 'ST Review', url: '/phn/reports/st-review', icon: ClipboardList },
+    { title: 'MCT Workspace', url: '/phn/reports/mct', icon: Activity },
     {
       title: 'Reports', url: '/phn/reports', icon: FileText,
       children: [
-        { title: 'ST Review', url: '/phn/reports/st-review' },
-        { title: 'Generate MCT', url: '/phn/reports/mct' },
+        { title: 'Q1 Compilation', url: '/phn/reports/q1' },
+        { title: 'Timeliness Monitor', url: '/phn/reports/timeliness' },
       ],
     },
     {
       title: 'Intelligence', url: '/phn/intelligence', icon: Map,
       children: [
         { title: 'Disease Map', url: '/phn/intelligence/map' },
-        { title: 'Forecasting', url: '/phn/intelligence/forecast' },
       ],
     },
   ],
@@ -176,8 +175,8 @@ export const QUICK_LINKS_CONFIG: Record<UserRole, QuickLink[]> = {
     { title: 'Reports', url: '/midwife/reports', icon: Syringe },
   ],
   nurse_phn: [
-    { title: 'Disease Map', url: '/phn/intelligence/map', icon: Map },
-    { title: 'Forecasting', url: '/phn/intelligence/forecast', icon: TrendingUp },
+    { title: 'Timeliness', url: '/phn/reports/timeliness', icon: TrendingUp },
+    { title: 'Q1 Review', url: '/phn/reports/q1', icon: FileText },
   ],
   phis_coordinator: [
     { title: 'M1 Reports', url: '/phis/exports?type=m1', icon: FileText },

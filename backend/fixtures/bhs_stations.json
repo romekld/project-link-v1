@@ -1,0 +1,258 @@
+[
+  {
+    "name": "Emmanuel Bergado I Barangay Health Station",
+    "psgc_code": "PH0402106021",
+    "lat": 14.315895,
+    "lng": 120.959300,
+    "contact_number": null,
+    "address": "Brgy. Emmanuel Bergado I, Dasmariñas City, Cavite"
+  },
+  {
+    "name": "Fatima I Barangay Health Station",
+    "psgc_code": "PH0402106022",
+    "lat": 14.318645,
+    "lng": 120.961780,
+    "contact_number": null,
+    "address": "Brgy. Fatima I, Dasmariñas City, Cavite"
+  },
+  {
+    "name": "Luzviminda I Barangay Health Station",
+    "psgc_code": "PH0402106023",
+    "lat": 14.315166,
+    "lng": 120.966360,
+    "contact_number": null,
+    "address": "Brgy. Luzviminda I, Dasmariñas City, Cavite"
+  },
+  {
+    "name": "San Andres I Barangay Health Station",
+    "psgc_code": "PH0402106025",
+    "lat": 14.320378,
+    "lng": 120.969465,
+    "contact_number": null,
+    "address": "Brgy. San Andres I, Dasmariñas City, Cavite"
+  },
+  {
+    "name": "San Antonio de Padua I Barangay Health Station",
+    "psgc_code": "PH0402106026",
+    "lat": 14.319135,
+    "lng": 120.957842,
+    "contact_number": null,
+    "address": "Brgy. San Antonio de Padua I, Dasmariñas City, Cavite"
+  },
+  {
+    "name": "San Francisco I Barangay Health Station",
+    "psgc_code": "PH0402106029",
+    "lat": 14.319811,
+    "lng": 120.966578,
+    "contact_number": null,
+    "address": "Brgy. San Francisco I, Dasmariñas City, Cavite"
+  },
+  {
+    "name": "San Lorenzo Ruiz I Barangay Health Station",
+    "psgc_code": "PH0402106032",
+    "lat": 14.311044,
+    "lng": 120.959733,
+    "contact_number": null,
+    "address": "Brgy. San Lorenzo Ruiz I, Dasmariñas City, Cavite"
+  },
+  {
+    "name": "San Luis I Barangay Health Station",
+    "psgc_code": "PH0402106033",
+    "lat": 14.310991,
+    "lng": 120.963373,
+    "contact_number": null,
+    "address": "Brgy. San Luis I, Dasmariñas City, Cavite"
+  },
+  {
+    "name": "San Mateo Barangay Health Station",
+    "psgc_code": "PH0402106035",
+    "lat": 14.317023,
+    "lng": 120.968410,
+    "contact_number": null,
+    "address": "Brgy. San Mateo, Dasmariñas City, Cavite"
+  },
+  {
+    "name": "San Nicolas I Barangay Health Station",
+    "psgc_code": "PH0402106037",
+    "lat": 14.315159,
+    "lng": 120.969146,
+    "contact_number": null,
+    "address": "Brgy. San Nicolas I, Dasmariñas City, Cavite"
+  },
+  {
+    "name": "San Roque (Sta. Cristina II) Barangay Health Station",
+    "psgc_code": "PH0402106038",
+    "lat": 14.323341,
+    "lng": 120.968161,
+    "contact_number": null,
+    "address": "Brgy. San Roque, Dasmariñas City, Cavite"
+  },
+  {
+    "name": "San Simon (Barangay 7) Health Station",
+    "psgc_code": "PH0402106039",
+    "lat": 14.319794,
+    "lng": 120.971704,
+    "contact_number": null,
+    "address": "Brgy. San Simon, Dasmariñas City, Cavite"
+  },
+  {
+    "name": "Santa Cristina I Barangay Health Station",
+    "psgc_code": "PH0402106040",
+    "lat": 14.323182,
+    "lng": 120.969760,
+    "contact_number": null,
+    "address": "Brgy. Santa Cristina I, Dasmariñas City, Cavite"
+  },
+  {
+    "name": "Santa Cruz I Barangay Health Station",
+    "psgc_code": "PH0402106041",
+    "lat": 14.313143,
+    "lng": 120.958862,
+    "contact_number": null,
+    "address": "Brgy. Santa Cruz I, Dasmariñas City, Cavite"
+  },
+  {
+    "name": "Santa Fe Barangay Health Station",
+    "psgc_code": "PH0402106042",
+    "lat": 14.319770,
+    "lng": 120.964741,
+    "contact_number": null,
+    "address": "Brgy. Santa Fe, Dasmariñas City, Cavite"
+  },
+  {
+    "name": "Santa Maria (Barangay 20) Health Station",
+    "psgc_code": "PH0402106044",
+    "lat": 14.322284,
+    "lng": 120.956853,
+    "contact_number": null,
+    "address": "Brgy. Santa Maria, Dasmariñas City, Cavite"
+  },
+  {
+    "name": "Burol I Barangay Health Station",
+    "psgc_code": "PH0402106047",
+    "lat": 14.330611,
+    "lng": 120.961999,
+    "contact_number": null,
+    "address": "Brgy. Burol I, Dasmariñas City, Cavite"
+  },
+  {
+    "name": "Burol II Barangay Health Station",
+    "psgc_code": "PH0402106048",
+    "lat": 14.323006,
+    "lng": 120.961652,
+    "contact_number": null,
+    "address": "Brgy. Burol II, Dasmariñas City, Cavite"
+  },
+  {
+    "name": "Burol III Barangay Health Station",
+    "psgc_code": "PH0402106049",
+    "lat": 14.329597,
+    "lng": 120.969295,
+    "contact_number": null,
+    "address": "Brgy. Burol III, Dasmariñas City, Cavite"
+  },
+  {
+    "name": "Emmanuel Bergado II Barangay Health Station",
+    "psgc_code": "PH0402106050",
+    "lat": 14.315022,
+    "lng": 120.961046,
+    "contact_number": null,
+    "address": "Brgy. Emmanuel Bergado II, Dasmariñas City, Cavite"
+  },
+  {
+    "name": "Fatima II Barangay Health Station",
+    "psgc_code": "PH0402106051",
+    "lat": 14.315540,
+    "lng": 120.964005,
+    "contact_number": null,
+    "address": "Brgy. Fatima II, Dasmariñas City, Cavite"
+  },
+  {
+    "name": "Fatima III Barangay Health Station",
+    "psgc_code": "PH0402106052",
+    "lat": 14.312383,
+    "lng": 120.965308,
+    "contact_number": null,
+    "address": "Brgy. Fatima III, Dasmariñas City, Cavite"
+  },
+  {
+    "name": "Luzviminda II Barangay Health Station",
+    "psgc_code": "PH0402106054",
+    "lat": 14.309584,
+    "lng": 120.969509,
+    "contact_number": null,
+    "address": "Brgy. Luzviminda II, Dasmariñas City, Cavite"
+  },
+  {
+    "name": "San Andres II Barangay Health Station",
+    "psgc_code": "PH0402106067",
+    "lat": 14.321896,
+    "lng": 120.967491,
+    "contact_number": null,
+    "address": "Brgy. San Andres II, Dasmariñas City, Cavite"
+  },
+  {
+    "name": "San Antonio de Padua II Barangay Health Station",
+    "psgc_code": "PH0402106068",
+    "lat": 14.317225,
+    "lng": 120.957332,
+    "contact_number": null,
+    "address": "Brgy. San Antonio de Padua II, Dasmariñas City, Cavite"
+  },
+  {
+    "name": "San Francisco II Barangay Health Station",
+    "psgc_code": "PH0402106069",
+    "lat": 14.320354,
+    "lng": 120.967004,
+    "contact_number": null,
+    "address": "Brgy. San Francisco II, Dasmariñas City, Cavite"
+  },
+  {
+    "name": "San Lorenzo Ruiz II Barangay Health Station",
+    "psgc_code": "PH0402106071",
+    "lat": 14.311203,
+    "lng": 120.957064,
+    "contact_number": null,
+    "address": "Brgy. San Lorenzo Ruiz II, Dasmariñas City, Cavite"
+  },
+  {
+    "name": "San Luis II Barangay Health Station",
+    "psgc_code": "PH0402106072",
+    "lat": 14.313646,
+    "lng": 120.962612,
+    "contact_number": null,
+    "address": "Brgy. San Luis II, Dasmariñas City, Cavite"
+  },
+  {
+    "name": "San Nicolas II Barangay Health Station",
+    "psgc_code": "PH0402106075",
+    "lat": 14.316368,
+    "lng": 120.972407,
+    "contact_number": null,
+    "address": "Brgy. San Nicolas II, Dasmariñas City, Cavite"
+  },
+  {
+    "name": "Santa Cristina II Barangay Health Station",
+    "psgc_code": "PH0402106076",
+    "lat": 14.323902,
+    "lng": 120.966650,
+    "contact_number": null,
+    "address": "Brgy. Santa Cristina II, Dasmariñas City, Cavite"
+  },
+  {
+    "name": "Santa Cruz II Barangay Health Station",
+    "psgc_code": "PH0402106077",
+    "lat": 14.315425,
+    "lng": 120.956892,
+    "contact_number": null,
+    "address": "Brgy. Santa Cruz II, Dasmariñas City, Cavite"
+  },
+  {
+    "name": "Victoria Reyes Barangay Health Station",
+    "psgc_code": "PH0402106081",
+    "lat": 14.316658,
+    "lng": 120.976589,
+    "contact_number": null,
+    "address": "Brgy. Victoria Reyes, Dasmariñas City, Cavite"
+  }
+]

@@ -323,6 +323,12 @@ const midwifeCatchAllRoute = createRoute({
 // PHN routes
 // ---------------------------------------------------------------------------
 import { PHNDashboardPage } from '@/pages/phn/dashboard'
+import { PhnMctPage } from '@/pages/phn/mct'
+import { PhnStReviewRoutePage } from '@/pages/phn/reports.st-review'
+import { PhnStReviewDetailRoutePage } from '@/pages/phn/reports.st-review.$stationId'
+import { PhnMctReportPage } from '@/pages/phn/reports.mct'
+import { PhnQuarterlyQ1RoutePage } from '@/pages/phn/reports.q1'
+import { PhnTimelinessRoutePage } from '@/pages/phn/reports.timeliness'
 
 const phnLayoutRoute = createRoute({
   getParentRoute: () => rootRoute,
@@ -334,6 +340,36 @@ const phnDashboardRoute = createRoute({
   getParentRoute: () => phnLayoutRoute,
   path: '/dashboard',
   component: PHNDashboardPage,
+})
+const phnMctRoute = createRoute({
+  getParentRoute: () => phnLayoutRoute,
+  path: '/mct',
+  component: PhnMctPage,
+})
+const phnStReviewRoute = createRoute({
+  getParentRoute: () => phnLayoutRoute,
+  path: '/reports/st-review',
+  component: PhnStReviewRoutePage,
+})
+const phnStReviewDetailRoute = createRoute({
+  getParentRoute: () => phnLayoutRoute,
+  path: '/reports/st-review/$stationId',
+  component: PhnStReviewDetailRoutePage,
+})
+const phnMctReportRoute = createRoute({
+  getParentRoute: () => phnLayoutRoute,
+  path: '/reports/mct',
+  component: PhnMctReportPage,
+})
+const phnQuarterlyQ1Route = createRoute({
+  getParentRoute: () => phnLayoutRoute,
+  path: '/reports/q1',
+  component: PhnQuarterlyQ1RoutePage,
+})
+const phnTimelinessRoute = createRoute({
+  getParentRoute: () => phnLayoutRoute,
+  path: '/reports/timeliness',
+  component: PhnTimelinessRoutePage,
 })
 const phnIntelligenceMapRoute = createRoute({
   getParentRoute: () => phnLayoutRoute,
@@ -569,7 +605,17 @@ const routeTree = rootRoute.addChildren([
     midwifeInventoryRoute,
     midwifeCatchAllRoute,
   ]),
-  phnLayoutRoute.addChildren([phnDashboardRoute, phnIntelligenceMapRoute, phnCatchAllRoute]),
+  phnLayoutRoute.addChildren([
+    phnDashboardRoute,
+    phnMctRoute,
+    phnStReviewRoute,
+    phnStReviewDetailRoute,
+    phnMctReportRoute,
+    phnQuarterlyQ1Route,
+    phnTimelinessRoute,
+    phnIntelligenceMapRoute,
+    phnCatchAllRoute,
+  ]),
   phisLayoutRoute.addChildren([phisDashboardRoute, phisCatchAllRoute]),
   dsoLayoutRoute.addChildren([dsoDashboardRoute, dsoIntelligenceMapRoute, dsoCatchAllRoute]),
   choLayoutRoute.addChildren([
