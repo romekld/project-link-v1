@@ -26,7 +26,7 @@ const FEATURES = [
 ]
 
 export function DSODashboardPage() {
-  useSetPageMeta({ title: 'Dashboard', breadcrumbs: [{ label: 'Dashboard' }] })
+  useSetPageMeta({ title: 'Dashboard', breadcrumbs: [{ label: 'Dashboard' }], showTitle: false })
 
   return (
     <div className="space-y-6">

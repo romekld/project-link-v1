@@ -29,7 +29,7 @@ interface Stats {
 }
 
 export function AdminDashboardPage() {
-  useSetPageMeta({ title: 'Dashboard', breadcrumbs: [{ label: 'Dashboard' }] })
+  useSetPageMeta({ title: 'Dashboard', breadcrumbs: [{ label: 'Dashboard' }], showTitle: false })
 
   const [stats, setStats] = useState<Stats | null>(null)
   const [loading, setLoading] = useState(true)
