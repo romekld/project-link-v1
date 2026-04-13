@@ -328,6 +328,7 @@ export function CoveragePlannerPage({ roleScope }: CoveragePlannerPageProps) {
                 zoom={11}
                 maxZoom={16}
                 minZoom={9}
+                cooperativeGestures
                 styles={mapStyles}
                 className="h-full"
               >
