@@ -6,7 +6,7 @@ import { ArrowRight, Users, ClipboardList, Wifi } from 'lucide-react'
 import { mockPatients, mockEncounters } from '@/lib/mock-patients'
 
 export function BHWDashboardPage() {
-  useSetPageMeta({ title: 'Dashboard', breadcrumbs: [{ label: 'Dashboard' }] })
+  useSetPageMeta({ title: 'Dashboard', breadcrumbs: [{ label: 'Dashboard' }], showTitle: false })
 
   const today = new Date().toISOString().slice(0, 10)
   const visitsToday = mockEncounters.filter((e) => e.date_time.slice(0, 10) === today).length
