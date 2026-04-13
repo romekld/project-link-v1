@@ -34,7 +34,7 @@ const QUICK_LINKS = [
 ]
 
 export function MidwifeDashboardPage() {
-  useSetPageMeta({ title: 'Dashboard', breadcrumbs: [{ label: 'Dashboard' }] })
+  useSetPageMeta({ title: 'Dashboard', breadcrumbs: [{ label: 'Dashboard' }], showTitle: false })
 
   const isOnline = useOnlineStatus()
   const pendingCount = validationQueue.filter((item) => item.status === 'PENDING_VALIDATION').length
