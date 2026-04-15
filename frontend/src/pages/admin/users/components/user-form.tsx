@@ -1047,14 +1047,16 @@ function HealthStationCombobox({
     ? stations.filter((station) => station.name.toLowerCase().includes(normalizedSearch))
     : stations
 
-  useEffect(() => {
-    if (!open && search) {
-      setSearch('')
-    }
-  }, [open, search])
-
   return (
-    <Popover open={disabled ? false : open} onOpenChange={setOpen}>
+    <Popover
+      open={disabled ? false : open}
+      onOpenChange={(nextOpen) => {
+        setOpen(nextOpen)
+        if (!nextOpen) {
+          setSearch('')
+        }
+      }}
+    >
       <PopoverTrigger
         render={
           <Button

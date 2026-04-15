@@ -25,7 +25,8 @@ Deno.serve(async (req) => {
       { global: { headers: { Authorization: authHeader } } }
     )
 
-    const { data: { user: caller }, error: callerError } = await callerClient.auth.getUser()
+    const token = authHeader.replace(/^Bearer\s+/i, '')
+    const { data: { user: caller }, error: callerError } = await callerClient.auth.getUser(token)
     if (callerError || !caller) {
       return new Response(
         JSON.stringify({ data: null, error: 'Unauthorized' }),

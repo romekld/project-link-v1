@@ -63,10 +63,11 @@ export async function requireCaller(req: Request, allowedRoles: string[]): Promi
     { global: { headers: { Authorization: authHeader } } },
   )
 
+  const token = authHeader.replace(/^Bearer\s+/i, '')
   const {
     data: { user },
     error,
-  } = await callerClient.auth.getUser()
+  } = await callerClient.auth.getUser(token)
 
   if (error || !user) {
     return failure(401, 'unauthorized', 'Unable to authenticate caller')
